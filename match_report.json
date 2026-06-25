@@ -1,0 +1,121 @@
+{
+  "matched": [
+    [
+      "맛대로촌닭",
+      "맛대로촌닭",
+      1.0,
+      null
+    ],
+    [
+      "마곡오리",
+      "마곡오리",
+      1.0,
+      null
+    ],
+    [
+      "마곡면옥",
+      "마곡면옥",
+      1.0,
+      null
+    ],
+    [
+      "집애김밥",
+      "집애김밥",
+      1.0,
+      null
+    ],
+    [
+      "옥담집",
+      "옥담집",
+      1.0,
+      null
+    ],
+    [
+      "왕소풍김밥",
+      "왕소풍김밥",
+      1.0,
+      null
+    ],
+    [
+      "선식당",
+      "선식당",
+      1.0,
+      null
+    ],
+    [
+      "태문네",
+      "태문네",
+      1.0,
+      null
+    ],
+    [
+      "마라홍 마라탕",
+      "마라홍 마라탕",
+      1.0,
+      null
+    ],
+    [
+      "카페 까사모멘토",
+      "카페 까사모멘토",
+      1.0,
+      null
+    ],
+    [
+      "빙그레식당",
+      "빙그레식당",
+      1.0,
+      null
+    ],
+    [
+      "장수밥상",
+      "장수밥상",
+      1.0,
+      null
+    ],
+    [
+      "매일향 중화요리",
+      "매일향 중화요리",
+      1.0,
+      null
+    ],
+    [
+      "김밥365",
+      "김밥365",
+      1.0,
+      null
+    ],
+    [
+      "빵굼터",
+      "빵굼터",
+      1.0,
+      null
+    ],
+    [
+      "금수저 아구찜",
+      "금수저 아구찜",
+      1.0,
+      null
+    ],
+    [
+      "마곡 명인 도넛츠 꽈배기",
+      "마곡명인 도너츠 꽈배기",
+      0.9,
+      null
+    ]
+  ],
+  "unmatched": [
+    [
+      "양천칼국수",
+      0.2222222222222222
+    ],
+    [
+      "인라이크",
+      0.2
+    ]
+  ],
+  "updates": 0,
+  "git": {
+    "commit": "[main e2b457a] Update stores.json: add naver links and extracted fields (aggressive match)\n Date: Wed Jun 24 00:26:40 2026 +0900\n 2 files changed, 686 insertions(+)\n create mode 100644 site/data/stores.json\n",
+    "push": "To https://github.com/YeongpyoKim/listen.git\n   6c3df7f..e2b457a  main -> main\n"
+  }
+}
