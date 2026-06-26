@@ -1,4 +1,4 @@
-/* 동네 한 바퀴 — 맛집 등록(성도 제안) 모달 */
+/* 동네 한 바퀴 — 맛집 등록 (성도 제안) 모달 및 추천 맛집 표시 */
 (function () {
   const fab = document.getElementById("submitFab");
   const modal = document.getElementById("submitModal");
@@ -47,7 +47,7 @@
       if (photoData.length >= MAX_PHOTOS) break;
       if (!/^image\//.test(f.type)) continue;
       if (f.size > MAX_BYTES) {
-        alert(`"${f.name}" 사진이 너무 큽니다(최대 4MB).`);
+        alert(`"${f.name}" 사진이 너무 큽니다 (최대 4MB).`);
         continue;
       }
       try {
@@ -95,7 +95,7 @@
       return;
     }
     if (payload.password.length < 4) {
-      msg("나중에 직접 지울 수 있도록 4자 이상 비밀번호를 입력해 주세요.", true);
+      msg("나중에 직접 지울 수 있도록 4 자 이상 비밀번호를 입력해 주세요.", true);
       return;
     }
     submitBtn.disabled = true;
@@ -115,10 +115,10 @@
         form.reset();
         photoData = [];
         renderThumbs();
-        loadSuggestions();
+        loadSubmissions();
         setTimeout(close, 1600);
       })
-      .catch(() => msg("등록 중 문제가 발생했어요. 로컬 서버(python serve.py)로 열어 주세요.", true))
+      .catch(() => msg("등록 중 문제가 발생했어요.", true))
       .finally(() => (submitBtn.disabled = false));
   });
 
@@ -127,7 +127,7 @@
     msgEl.classList.toggle("err", !!isErr);
   }
 
-  // ---- 이웃이 추천한 맛집(검토 중) 공개 목록 ----
+  // ---- 성도들이 추천한 맛집 (카드 형식) ----
   const section = document.getElementById("suggestSection");
   const grid = document.getElementById("suggestGrid");
 
@@ -136,7 +136,7 @@
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
-  function suggestCard(s) {
+  function submissionCard(s) {
     const photos = (s.photos || []).filter(Boolean);
     const main = photos[0] || "";
     const media = main
@@ -161,7 +161,7 @@
     return `<article class="sg-card">
         ${media}
         <div class="sg-body">
-          <div class="sg-badge">검토 중</div>
+          <div class="sg-badge">성도 추천</div>
           <h3>${esc(s.store_name)}</h3>
           ${meta ? `<div class="sg-meta">${meta}</div>` : ""}
           ${rows.join("")}
@@ -175,11 +175,11 @@
       </article>`;
   }
 
-  function delSuggestion(subId) {
+  function delSubmission(subId) {
     if (!subId) return;
     const pw = prompt("이 추천 글을 지우려면 등록할 때 입력한 비밀번호를 알려 주세요.");
     if (pw == null) return;
-    fetch((window.LH_API_BASE || "") + "/api/submissions", {
+    fetch(API, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action: "delete", sub_id: subId, password: pw.trim() }),
@@ -187,30 +187,29 @@
       .then((r) => r.json().then((d) => ({ ok: r.ok, d })))
       .then(({ ok, d }) => {
         if (!ok) return alert(d.error || "삭제에 실패했어요.");
-        loadSuggestions();
+        loadSubmissions();
       })
       .catch(() => alert("삭제 중 문제가 발생했어요."));
   }
 
-  function loadSuggestions() {
+  function loadSubmissions() {
     if (!section || !grid) return;
-    fetch((window.LH_API_BASE || "") + "/api/submissions")
+    fetch(API)
       .then((r) => r.json())
       .then((d) => {
-        // 아직 정식 등록 전(pending)인 추천만 노출. 정식 등록되면 메인 갤러리에 표시됨.
-        const pending = (d.submissions || []).filter((s) => (s.status || "pending") === "pending");
-        if (!pending.length) {
+        const submissions = d.submissions || [];
+        if (!submissions.length) {
           section.hidden = true;
           return;
         }
-        grid.innerHTML = pending.map(suggestCard).join("");
+        grid.innerHTML = submissions.map(submissionCard).join("");
         section.hidden = false;
         grid.querySelectorAll(".sg-del").forEach((b) =>
-          b.addEventListener("click", () => delSuggestion(b.getAttribute("data-sid")))
+          b.addEventListener("click", () => delSubmission(b.getAttribute("data-sid")))
         );
       })
       .catch(() => {});
   }
 
-  loadSuggestions();
+  loadSubmissions();
 })();
