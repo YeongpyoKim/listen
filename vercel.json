@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "site/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "serverless/api/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/serverless/api/$1.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/site/$1"
+    }
+  ]
+}

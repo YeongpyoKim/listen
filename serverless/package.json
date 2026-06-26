@@ -1,12 +1,10 @@
 {
   "name": "listen-serverless",
   "version": "0.1.0",
-  "description": "Serverless API to persist comments into GitHub repo",
+  "description": "Serverless API using GitHub as backend storage",
   "main": "api/comments.js",
   "scripts": {
     "start": "node ./api/comments.js"
   },
-  "dependencies": {
-    "@libsql/client": "^0.6.2"
-  },
+  "dependencies": {}
 }

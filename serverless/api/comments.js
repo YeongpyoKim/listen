@@ -1,24 +1,10 @@
-const { query, getRow, execute } = require('./db');
-const crypto = require('crypto');
-
 /**
  * serverless/api/comments.js
- * SQLite (Turso) backed comments API with password-based management.
+ * Comments API using GitHub Issues as backend storage
  */
 
-async function ensureSchema() {
-  await execute(`
-    CREATE TABLE IF NOT EXISTS comments (
-      cid TEXT PRIMARY KEY,
-      store_id TEXT NOT NULL,
-      name TEXT,
-      text TEXT NOT NULL,
-      password TEXT NOT NULL,
-      ts TEXT NOT NULL,
-      edited_ts TEXT
-    )
-  `);
-}
+const db = require('./db');
+const crypto = require('crypto');
 
 function jsonResponse(res, status, obj) {
   return res.status(status).json(obj);
@@ -26,20 +12,19 @@ function jsonResponse(res, status, obj) {
 
 module.exports = async function (req, res) {
   try {
-    await ensureSchema();
+    // Validate environment
+    if (!process.env.GITHUB_TOKEN) {
+      return jsonResponse(res, 500, { error: 'Server configuration error: GITHUB_TOKEN not set' });
+    }
 
     if (req.method === 'GET') {
-      const storeId = req.query?.id || new URL(req.url, `http://localhost`).searchParams.get('id');
+      const storeId = req.query?.id || new URL(req.url, 'http://localhost').searchParams.get('id');
       if (!storeId) {
         return jsonResponse(res, 400, { error: 'Missing store id' });
       }
 
-      const rows = await query(
-        'SELECT cid, name, text, ts, edited_ts FROM comments WHERE store_id = ? ORDER BY ts DESC',
-        [storeId]
-      );
-
-      return jsonResponse(res, 200, { comments: rows });
+      const comments = await db.comments.list(storeId);
+      return jsonResponse(res, 200, { comments });
     }
 
     if (req.method === 'POST') {
@@ -61,16 +46,12 @@ module.exports = async function (req, res) {
 
         const newCid = crypto.randomUUID();
         const ts = new Date().toISOString();
-        await execute(
-          'INSERT INTO comments (cid, store_id, name, text, password, ts) VALUES (?, ?, ?, ?, ?, ?)',
-          [newCid, storeId, name || '익명', text, password, ts]
-        );
 
-        const rows = await query(
-          'SELECT cid, name, text, ts, edited_ts FROM comments WHERE store_id = ? ORDER BY ts DESC',
-          [storeId]
-        );
-        return jsonResponse(res, 200, { ok: true, comments: rows });
+        await db.comments.add(storeId, newCid, name || '익명', text, password, ts);
+
+        // Return updated list
+        const comments = await db.comments.list(storeId);
+        return jsonResponse(res, 200, { ok: true, cid: newCid, comments });
       }
 
       if (action === 'edit') {
@@ -78,19 +59,18 @@ module.exports = async function (req, res) {
           return jsonResponse(res, 400, { error: 'Missing cid, text, or password' });
         }
 
-        const existing = await getRow('SELECT password FROM comments WHERE cid = ?', [cid]);
+        // Verify ownership by finding the comment and checking password
+        const existing = await db.comments.getByCid(cid);
         if (!existing || existing.password !== password) {
           return jsonResponse(res, 403, { error: 'Invalid password' });
         }
 
         const editedTs = new Date().toISOString();
-        await execute('UPDATE comments SET text = ?, edited_ts = ? WHERE cid = ?', [text, editedTs, cid]);
+        await db.comments.update(cid, text, editedTs);
 
-        const rows = await query(
-          'SELECT cid, name, text, ts, edited_ts FROM comments WHERE store_id = (SELECT store_id FROM comments WHERE cid = ?) ORDER BY ts DESC',
-          [cid]
-        );
-        return jsonResponse(res, 200, { ok: true, comments: rows });
+        // Return updated list for the store
+        const comments = await db.comments.list(existing.store_id);
+        return jsonResponse(res, 200, { ok: true, comments });
       }
 
       if (action === 'delete') {
@@ -98,27 +78,26 @@ module.exports = async function (req, res) {
           return jsonResponse(res, 400, { error: 'Missing cid or password' });
         }
 
-        const existing = await getRow('SELECT store_id, password FROM comments WHERE cid = ?', [cid]);
+        // Verify ownership by finding the comment and checking password
+        const existing = await db.comments.getByCid(cid);
         if (!existing || existing.password !== password) {
           return jsonResponse(res, 403, { error: 'Invalid password' });
         }
 
-        const currentStoreId = existing.store_id;
-        await execute('DELETE FROM comments WHERE cid = ?', [cid]);
+        const storeId = existing.store_id;
+        await db.comments.delete(cid);
 
-        const rows = await query(
-          'SELECT cid, name, text, ts, edited_ts FROM comments WHERE store_id = ? ORDER BY ts DESC',
-          [currentStoreId]
-        );
-        return jsonResponse(res, 200, { ok: true, comments: rows });
+        // Return updated list
+        const comments = await db.comments.list(storeId);
+        return jsonResponse(res, 200, { ok: true, comments });
       }
 
-      return jsonResponse(res, 400, { error: 'Invalid action' });
+      return jsonResponse(res, 400, { error: 'Invalid action. Use: add, edit, delete' });
     }
 
     return jsonResponse(res, 405, { error: 'Method not allowed' });
   } catch (e) {
-    console.error(e);
+    console.error('Comments API error:', e);
     return jsonResponse(res, 500, { error: String(e.message || e) });
   }
 };

@@ -1,18 +1,9 @@
-const { query, execute } = require('./db');
-
 /**
  * serverless/api/favorites.js
- * Manage global store like counts (Favorites).
+ * Manage global store like counts (Favorites) using GitHub Issues as backend.
  */
 
-async function ensureSchema() {
-  await execute(`
-    CREATE TABLE IF NOT EXISTS favorites (
-      store_id TEXT PRIMARY KEY,
-      count INTEGER DEFAULT 0
-    )
-  `);
-}
+const db = require('./db');
 
 function jsonResponse(res, status, obj) {
   return res.status(status).json(obj);
@@ -20,16 +11,18 @@ function jsonResponse(res, status, obj) {
 
 module.exports = async function (req, res) {
   try {
-    await ensureSchema();
+    // Validate environment
+    if (!process.env.GITHUB_TOKEN) {
+      return jsonResponse(res, 500, { error: 'Server configuration error: GITHUB_TOKEN not set' });
+    }
 
     if (req.method === 'GET') {
-      const storeId = req.query?.id || new URL(req.url, `http://localhost`).searchParams.get('id');
+      const storeId = req.query?.id || new URL(req.url, 'http://localhost').searchParams.get('id');
       if (!storeId) {
         return jsonResponse(res, 400, { error: 'Missing store id' });
       }
 
-      const rows = await query('SELECT count FROM favorites WHERE store_id = ?', [storeId]);
-      const count = rows.length > 0 ? rows[0].count : 0;
+      const count = await db.favorites.getCount(storeId);
       return jsonResponse(res, 200, { count });
     }
 
@@ -45,19 +38,16 @@ module.exports = async function (req, res) {
         return jsonResponse(res, 400, { error: 'Missing store id' });
       }
 
-      // Upsert: increment like count
-      await execute(
-        'INSERT INTO favorites (store_id, count) VALUES (?, 1) ON CONFLICT(store_id) DO UPDATE SET count = count + 1',
-        [storeId]
-      );
+      // Add to favorites (increment count)
+      await db.favorites.add(storeId);
 
-      const rows = await query('SELECT count FROM favorites WHERE store_id = ?', [storeId]);
-      return jsonResponse(res, 200, { ok: true, count: rows[0]?.count || 1 });
+      const count = await db.favorites.getCount(storeId);
+      return jsonResponse(res, 200, { ok: true, count });
     }
 
     return jsonResponse(res, 405, { error: 'Method not allowed' });
   } catch (e) {
-    console.error(e);
+    console.error('Favorites API error:', e);
     return jsonResponse(res, 500, { error: String(e.message || e) });
   }
 };

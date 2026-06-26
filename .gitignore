@@ -22,3 +22,8 @@ wheels/
 .installed.cfg
 *.egg
 .DS_Store
+.vercel
+.env*
+
+# Vercel local installation
+node_modules/
