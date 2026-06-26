@@ -117,6 +117,7 @@
           <div class="overlay"><div class="meta">
             <div class="nm">${s.emoji} ${s.name}</div>
             <div class="ty">${s.type || ""}${s.signature ? " · " + firstPart(s.signature) : ""}</div>
+            ${(sun.cls === 'biweekly' || sun.cls === 'closed') ? `<div class="sunday-info">${sun.label}</div>` : ''}
           </div></div>
           ${badges}
         </div>
