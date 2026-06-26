@@ -4,9 +4,29 @@
  */
 
 const db = require('./db');
+const { Buffer } = require('buffer');
 
 function jsonResponse(res, status, obj) {
   return res.status(status).json(obj);
+}
+
+async function uploadPhotos(subId, photos) {
+  const urls = [];
+  for (const p of photos) {
+    if (!p) continue;
+    if (/^https?:\/\//.test(p)) {
+      urls.push(p);
+      continue;
+    }
+    const match = String(p).match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!match) continue;
+    const ext = match[1] === 'jpeg' ? '.jpg' : `.${match[1]}`;
+    const buffer = Buffer.from(match[2], 'base64');
+    if (buffer.length > 4 * 1024 * 1024) continue;
+    const url = await db.images.upload(`submissions/${subId}`, buffer, ext);
+    urls.push(url);
+  }
+  return urls;
 }
 
 module.exports = async function (req, res) {
@@ -58,6 +78,8 @@ module.exports = async function (req, res) {
       const photosJson = Array.isArray(body.photos) ? body.photos.filter(Boolean) : [];
       const ts = Date.now().toString();
 
+      const photoUrls = await uploadPhotos(sub_id, photosJson);
+
       const data = {
         sub_id,
         store_name: storeName,
@@ -69,7 +91,7 @@ module.exports = async function (req, res) {
         reason: text,
         submitter,
         password,
-        photos: photosJson,
+        photos: photoUrls,
         ts
       };
 
@@ -105,6 +127,7 @@ module.exports = async function (req, res) {
       if (current.password !== password) return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다.' });
 
       const photosJson = Array.isArray(body.photos) ? body.photos.filter(Boolean) : [];
+      const photoUrls = await uploadPhotos(subId, photosJson);
 
       const updated = {
         ...current,
@@ -115,7 +138,7 @@ module.exports = async function (req, res) {
         phone: String(body.phone || '').trim(),
         hours: String(body.hours || '').trim(),
         reason: String(body.reason || '').trim(),
-        photos: photosJson,
+        photos: photoUrls,
         updated_at: Date.now().toString()
       };
 

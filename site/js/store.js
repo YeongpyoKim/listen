@@ -43,7 +43,11 @@
   }
 
   function render(s) {
-    const sun = SUNDAY[s.sunday] || SUNDAY.check;
+    const resolved = window.SundayCalc ? SundayCalc.resolve(s) : null;
+    const sun = resolved ? resolved.detail : (SUNDAY[s.sunday] || SUNDAY.check);
+    const sundayNote = resolved
+      ? [resolved.dynamic, resolved.note].filter(Boolean).join("\n")
+      : (s.sunday_note || "");
     let hero;
     if (s.placeholder) {
       const grad = `linear-gradient(150deg, ${s.accent}, ${shade(s.accent, -30)})`;
@@ -91,7 +95,7 @@
       <div class="wrap">
         <div class="sunday ${sun.cls}">
           <div class="ico">${sun.ico}</div>
-          <div><div class="t">${sun.t}</div><div class="d">${esc(s.sunday_note || "")}</div></div>
+          <div><div class="t">${sun.t}</div><div class="d">${esc(sundayNote).replace(/\n/g, "<br />")}</div></div>
         </div>
       </div>
 

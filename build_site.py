@@ -130,6 +130,8 @@ def main():
             "gallery": gallery,
             "placeholder": main_image == "",
         }
+        if content.get("sunday_rule"):
+            store["sunday_rule"] = content["sunday_rule"]
         stores.append(store)
 
     out = {

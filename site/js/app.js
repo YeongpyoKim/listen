@@ -70,7 +70,8 @@
   }
 
   function cardHTML(s) {
-    const sun = SUNDAY[s.sunday] || SUNDAY.check;
+    const resolved = window.SundayCalc ? SundayCalc.resolve(s) : null;
+    const sun = resolved ? resolved.badge : (SUNDAY[s.sunday] || SUNDAY.check);
     const badge = `<span class="badge ${sun.cls}">${sun.label}</span>`;
     let media;
     if (s.placeholder) {

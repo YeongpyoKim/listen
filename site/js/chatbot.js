@@ -121,7 +121,7 @@ window.Chatbot = (function () {
     return `<a class="store-mini" href="store.html?id=${s.id}">
       ${media}
       <div class="mt"><b>${s.emoji} ${escapeHtml(s.name)}</b>
-      <span>${escapeHtml(s.type || "")} · ${SUN_TXT[s.sunday] || ""}</span></div>
+      <span>${escapeHtml(s.type || "")} · ${window.SundayCalc ? (SundayCalc.resolve(s).isOpenThisSunday ? "주일 영업 ✅" : SundayCalc.resolve(s).isOpenThisSunday === false ? "주일 휴무 🚫" : "주일 확인 📞") : (SUN_TXT[s.sunday] || "")}</span></div>
     </a>`;
   }
   function botCards(text, list) {
@@ -159,16 +159,23 @@ window.Chatbot = (function () {
 
     // 2) 주일/일요일
     if (/(주일|일요일|일욜|sunday)/.test(t)) {
-      const open = stores.filter((s) => s.sunday === "open");
-      const warn = stores.filter((s) => s.sunday === "biweekly");
+      const open = stores.filter((s) => {
+        if (window.SundayCalc) return SundayCalc.isOpenOnSunday(s) === true;
+        return s.sunday === "open";
+      });
+      const dynamic = stores.filter((s) => {
+        if (!window.SundayCalc) return s.sunday === "biweekly" || s.sunday === "monthly_off";
+        return SundayCalc.isOpenOnSunday(s) === false && (s.sunday === "biweekly" || s.sunday === "monthly_off");
+      });
       let txt = `주일에 **문을 여는 곳**이에요. (총 ${open.length}곳)`;
       botCards(txt, open);
-      if (warn.length)
-        bot(
-          `⚠️ **${warn
-            .map((s) => s.name)
-            .join(", ")}** 은(는) 주일이 격주 휴무예요. 방문 전 꼭 확인하세요!`
-        );
+      if (dynamic.length) {
+        const names = dynamic.map((s) => {
+          const r = SundayCalc.resolve(s);
+          return `${s.name}(${r.isOpenThisSunday ? "영업" : "휴무"})`;
+        });
+        bot(`⚠️ 이번 주일 기준: **${names.join(", ")}** — 격주·월별 휴무 패턴이 있어요. 상세 페이지에서 확인하세요.`);
+      }
       bot("그 외 가게는 정기휴무가 확정되지 않아, 상세 페이지의 전화번호로 확인하시는 게 안전해요.");
       return null;
     }
@@ -218,9 +225,16 @@ window.Chatbot = (function () {
   }
 
   function storeDetail(s, q) {
+    const resolved = window.SundayCalc ? SundayCalc.resolve(s) : null;
+    const sunTxt = resolved
+      ? (resolved.isOpenThisSunday ? "주일 영업 ✅" : resolved.isOpenThisSunday === false ? "주일 휴무 🚫" : "주일 확인 필요 📞")
+      : (SUN_TXT[s.sunday] || "");
+    const sunNote = resolved
+      ? [resolved.dynamic, resolved.note].filter(Boolean).join(" · ")
+      : (s.sunday_note || "");
     const lines = [
       `**${s.emoji} ${s.name}** — ${s.type}`,
-      `${SUN_TXT[s.sunday]} · ${s.sunday_note || ""}`,
+      `${sunTxt} · ${sunNote}`,
     ];
     if (/주차/.test(q) && s.parking) lines.push(`🚗 주차: ${s.parking}`);
     else if (/시간|영업|휴무|문|열/.test(q) && s.hours) lines.push(`🕒 ${s.hours}`);
