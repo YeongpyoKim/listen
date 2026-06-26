@@ -353,8 +353,10 @@ module.exports = {
     async deleteAll() {
       const existing = await findIssueByLabelAndTitle('favorites', 'favorites-data');
       if (existing) {
-        // Close the issue to clear all favorites
-        return await closeIssue(existing.number);
+        // Clear all favorites by updating to empty array
+        return await updateIssue(existing.number, 'favorites-data',
+          JSON.stringify({ favorites: [], reset_at: new Date().toISOString() })
+        );
       }
       return null;
     },
