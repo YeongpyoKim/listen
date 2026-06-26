@@ -349,6 +349,15 @@ module.exports = {
       favorites = favorites.filter(f => f.store_id !== storeId);
       return await this.update(favorites);
     },
+
+    async deleteAll() {
+      const existing = await findIssueByLabelAndTitle('favorites', 'favorites-data');
+      if (existing) {
+        // Close the issue to clear all favorites
+        return await closeIssue(existing.number);
+      }
+      return null;
+    },
   },
 
   // Image storage operations (stored as files in images/ folder)

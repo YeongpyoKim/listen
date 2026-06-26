@@ -37,6 +37,14 @@ module.exports = async function (req, res) {
         req.on('end', () => resolve(JSON.parse(d || '{}')));
       }));
 
+      const action = body.action;
+
+      // Delete all favorites (reset/initialization)
+      if (action === 'deleteAll') {
+        await db.favorites.deleteAll();
+        return jsonResponse(res, 200, { ok: true, message: '모든 좋아요 데이터가 초기화되었습니다.' });
+      }
+
       const { id: storeId } = body;
       if (!storeId) {
         return jsonResponse(res, 400, { error: 'Missing store id' });
