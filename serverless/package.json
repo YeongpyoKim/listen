@@ -7,5 +7,6 @@
     "start": "node ./api/comments.js"
   },
   "dependencies": {
-  }
+    "@libsql/client": "^0.6.2"
+  },
 }

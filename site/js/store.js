@@ -99,7 +99,9 @@
         <div class="story-label">Story</div>
         <p class="story">${esc(s.story || "")}</p>
         ${s.review ? `<blockquote class="review">${esc(s.review)}<span class="review-src">— 이웃들의 한줄평</span></blockquote>` : ""}
-        <div class="cta">${naverBtn}${callBtn}
+        <div class="cta">
+          <button class="btn" id="favBtn">🤍 <span id="favCount">0</span></button>
+          ${naverBtn}${callBtn}
           <button class="btn" id="askBot">💬 이 가게, 챗봇에게 물어보기</button>
         </div>
       </div></section>
@@ -147,6 +149,8 @@
       </footer>
     `;
 
+    initFavorites(s);
+
     // lightbox
     const lb = document.getElementById("lightbox");
     const lbImg = document.getElementById("lightboxImg");
@@ -161,7 +165,54 @@
     const askBtn = document.getElementById("askBot");
     if (askBtn) askBtn.addEventListener("click", () => window.Chatbot && window.Chatbot.open(s));
 
+    // Favorites: 개인 선호 상점 (localStorage) + 글로벌 좋아요 수 (API)
+    function initFavorites(s) {
+      const API = (window.LH_API_BASE || "") + "/api/favorites";
+      const btnEl = document.getElementById("favBtn");
+      const countEl = document.getElementById("favCount");
+
+      function updateUI(isFav, count) {
+        btnEl.innerHTML = `${isFav ? "❤️" : "🤍"} <span id="favCount">${count}</span>`;
+        // Redefine the element since innerHTML replaced it
+        window._currentFavCountEl = document.getElementById("favCount");
+      }
+
+      function load() {
+        const favs = JSON.parse(localStorage.getItem("fav_stores") || "[]");
+        const isFav = favs.includes(s.id);
+        fetch(`${API}?id=${encodeURIComponent(s.id)}`)
+          .then((r) => r.json())
+          .then((d) => updateUI(isFav, d.count || 0))
+          .catch(() => updateUI(isFav, 0));
+      }
+
+      function toggle() {
+        let favs = JSON.parse(localStorage.getItem("fav_stores") || "[]");
+        const isFav = favs.includes(s.id);
+        if (isFav) {
+          favs = favs.filter((x) => x !== s.id);
+        } else {
+          favs.push(s.id);
+          fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: s.id }),
+          })
+            .then((r) => r.json())
+            .then((d) => updateUI(true, d.count))
+            .catch(() => updateUI(true, 0)); // optimistic
+          return;
+        }
+        localStorage.setItem("fav_stores", JSON.stringify(favs));
+        load();
+      }
+
+      btnEl.addEventListener("click", toggle);
+      load();
+    }
+
     // Comments: 깃허브 리포지토리를 DB로 사용하는 API 기반 댓글
+
     (function initComments() {
       const API = (window.LH_API_BASE || "") + "/api/comments";
       const listEl = document.getElementById("commentsList");
