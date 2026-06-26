@@ -199,7 +199,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== Chatbot ===== */
 .chat-fab {
-  position: fixed; right: 22px; bottom: 22px; z-index: 60;
+  position: fixed; right: 22px; bottom: 180px; z-index: 58;
   width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
   background: linear-gradient(135deg, var(--gold), #8a6a2e); color: #fff; font-size: 26px;
   box-shadow: 0 12px 30px rgba(120, 90, 30, .45); transition: transform .2s;
@@ -274,7 +274,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== 변경된 정보 제보하기 FAB ===== */
 .report-fab {
-  position: fixed; right: 22px; bottom: 162px; z-index: 59;
+  position: fixed; right: 22px; bottom: 22px; z-index: 56;
   width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
   background: linear-gradient(135deg, #4a90d9, #2c6fb5); color: #fff;
   box-shadow: 0 12px 30px rgba(50, 100, 180, .45); transition: transform .2s;
@@ -286,7 +286,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ===== 맛집 등록 FAB ===== */
 .submit-fab {
-  position: fixed; right: 22px; bottom: 92px; z-index: 60;
+  position: fixed; right: 22px; bottom: 110px; z-index: 57;
   width: 60px; height: 60px; border-radius: 50%; border: none; cursor: pointer;
   background: linear-gradient(135deg, #6f8f5a, #4f7040); color: #fff;
   box-shadow: 0 12px 30px rgba(70, 100, 50, .45); transition: transform .2s;
