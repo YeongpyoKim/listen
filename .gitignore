@@ -27,3 +27,6 @@ wheels/
 
 # Vercel local installation
 node_modules/
+
+# Dependencies
+node_modules/
