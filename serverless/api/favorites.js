@@ -18,12 +18,16 @@ module.exports = async function (req, res) {
 
     if (req.method === 'GET') {
       const storeId = req.query?.id || new URL(req.url, 'http://localhost').searchParams.get('id');
-      if (!storeId) {
-        return jsonResponse(res, 400, { error: 'Missing store id' });
+
+      // If specific store ID requested, return count for that store
+      if (storeId) {
+        const count = await db.favorites.getCount(storeId);
+        return jsonResponse(res, 200, { count });
       }
 
-      const count = await db.favorites.getCount(storeId);
-      return jsonResponse(res, 200, { count });
+      // Otherwise, return all favorites as an array
+      const favorites = await db.favorites.getAll();
+      return jsonResponse(res, 200, favorites);
     }
 
     if (req.method === 'POST') {

@@ -14,6 +14,7 @@
   let stores = [];
   let activeType = "전체";
   let commentCounts = {};
+  let favoriteCounts = {};
 
   fetch("data/stores.json")
     .then((r) => r.json())
@@ -24,6 +25,7 @@
       render();
       if (window.Chatbot) window.Chatbot.init(stores);
       loadCommentCounts();
+      loadFavoriteCounts();
     })
     .catch((e) => {
       grid.innerHTML =
@@ -38,6 +40,26 @@
         commentCounts = Object.fromEntries(
           Object.entries(cm || {}).map(([k, v]) => [k, Array.isArray(v) ? v.length : 0])
         );
+        render();
+      })
+      .catch(() => {});
+  }
+
+  function loadFavoriteCounts() {
+    fetch((window.LH_API_BASE || "") + "/api/favorites")
+      .then((r) => r.json())
+      .then((data) => {
+        // data should be an array of favorite entries or {store_id: count} object
+        if (Array.isArray(data)) {
+          favoriteCounts = {};
+          data.forEach(f => {
+            if (f.store_id) {
+              favoriteCounts[f.store_id] = (favoriteCounts[f.store_id] || 0) + 1;
+            }
+          });
+        } else if (typeof data === 'object' && data !== null) {
+          favoriteCounts = data;
+        }
         render();
       })
       .catch(() => {});
@@ -85,15 +107,17 @@
       media = `<img loading="lazy" src="${s.main_image}" alt="${s.name}" />`;
     }
     const ccount = commentCounts[s.id] || 0;
-    const cBadge = ccount ? `<div class="cmt-count">💬 ${ccount}</div>` : "";
-    const communityBadge = s.community ? `<span class="badge community">이웃 추천</span>` : "";
+    const fcount = favoriteCounts[s.id] || 0;
+    let badges = "";
+    if (fcount > 0) badges += `<div class="fav-count">❤️ ${fcount}</div>`;
+    if (ccount > 0) badges += `<div class="cmt-count">💬 ${ccount}</div>`;
     return `<a class="card" href="store.html?id=${s.id}">
         <div class="thumb">${badge}${communityBadge}${media}
           <div class="overlay"><div class="meta">
             <div class="nm">${s.emoji} ${s.name}</div>
             <div class="ty">${s.type || ""}${s.signature ? " · " + firstPart(s.signature) : ""}</div>
           </div></div>
-          ${cBadge}
+          ${badges}
         </div>
       </a>`;
   }

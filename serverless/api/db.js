@@ -126,7 +126,12 @@ function getRawImageUrl(path) {
   return `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
 }
 
+// Export helper functions for use in other modules
 module.exports = {
+  githubRequest,
+  createIssue,
+  closeIssue,
+  updateIssue,
   // Comments table operations (stored as Issues with label "comment")
   comments: {
     async list(storeId) {
