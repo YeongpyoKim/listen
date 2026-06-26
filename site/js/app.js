@@ -95,6 +95,7 @@
     const resolved = window.SundayCalc ? SundayCalc.resolve(s) : null;
     const sun = resolved ? resolved.badge : (SUNDAY[s.sunday] || SUNDAY.check);
     const badge = `<span class="badge ${sun.cls}">${sun.label}</span>`;
+    const communityBadge = s.community ? `<span class="badge community">이웃 추천</span>` : "";
     let media;
     if (s.placeholder) {
       const grad = `linear-gradient(150deg, ${s.accent}, ${shade(s.accent, -28)})`;
