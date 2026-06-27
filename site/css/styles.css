@@ -273,7 +273,9 @@ a { color: inherit; text-decoration: none; }
 #commentsList .empty { font-size:14px; color:var(--ink-soft); padding:14px; text-align:center; background:var(--bg-soft); border-radius:12px; }
 .comment-form .cf-row { display:flex; gap:8px; }
 .comment-form .cf-row input { flex:1; }
-.comment-form .cf-actions { display:flex; gap:8px; margin-top:2px; }
+.comment-form .cf-actions { display:flex; gap:8px; margin-top:2px; flex-wrap:wrap; }
+.comment-form #c_delAll { background:#f55; color:#fff; border-color:#d44; }
+.comment-form #c_delAll:hover { background:#d33; border-color:#b22; }
 .comment-form .cf-upload { display:block; margin-top:10px; font-size:13px; color:var(--ink-soft); }
 .comment-form .cf-upload input[type="file"] { display:block; margin-top:6px; font-size:13px; }
 .comment-form .cf-preview { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
