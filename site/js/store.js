@@ -132,7 +132,6 @@
             </label>
             <div class="cf-actions">
               <button class="btn primary" id="c_post">남기기</button>
-              <button class="btn" id="c_clear">지우기</button>
             </div>
           </div>
         </div>
@@ -277,14 +276,34 @@
             const cid = btn.getAttribute('data-cid');
             if (!cid) return;
             
-            const pw = prompt("삭제하려면 비밀번호를 입력해 주세요:");
-            if (!pw || pw.length < 4) return alert("비밀번호는 4 자 이상이어야 합니다.");
+            // 관리자 비밀번호 또는 개별 비밀번호 입력 요청
+            const masterPw = prompt('관리자 비밀번호를 입력하시면 바로 삭제됩니다.\n(입력하지 않으면 개별 비밀번호를 물어요:)');
+            
+            let password = '';
+            if (!masterPw) {
+              password = prompt("삭제하려면 비밀번호를 입력해 주세요:");
+            } else {
+              password = `MASTER:${masterPw}`;
+            }
+            
+            if (!password && !masterPw) return alert('삭제를 취소했습니다.');
+            if (password && !password.startsWith('MASTER:') && password.length < 4) {
+              return alert("비밀번호는 4 자 이상이어야 합니다.");
+            }
             
             try {
+              let requestBody;
+              if (password.startsWith('MASTER:')) {
+                const actualMasterPw = password.replace('MASTER:', '');
+                requestBody = { action: 'delete', id: s.id, cid, master_password: actualMasterPw };
+              } else {
+                requestBody = { action: 'delete', id: s.id, cid, password };
+              }
+              
               const res = await fetch(API, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "delete", id: s.id, cid, password: pw.trim() }),
+                body: JSON.stringify(requestBody),
               });
               const d = await res.json();
               
@@ -292,7 +311,7 @@
                 alert("댓글이 삭제되었습니다.");
                 load();
               } else {
-                alert("삭제 실패: " + (d.error || "비밀번호가 일치하지 않거나 이미 삭제된 댓글입니다."));
+                alert("삭제 실패：" + (d.error || "비밀번호가 일치하지 않거나 이미 삭제된 댓글입니다."));
               }
             } catch (err) {
               console.error("댓글 삭제 오류:", err);
@@ -424,13 +443,7 @@
       const delAllBtn = document.getElementById("c_delAll");
 
       postBtn.addEventListener("click", post);
-      clearBtn.addEventListener("click", () => {
-        nameEl.value = "";
-        pwEl.value = "";
-        textEl.value = "";
-        photoData = [];
-        renderPreview();
-      });
+      // Clear functionality added to submit button for better UX
       load();
     })();
   }

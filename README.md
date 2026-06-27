@@ -67,4 +67,107 @@ Listen/
 
 - **사실 정보**(메뉴/가격/시간/좌석/주차): `상점 리스트.xlsx` 수정 후 `python build_site.py`
 - **감성 문구·스토리·주일 안내·주소/전화**: `site_content.py` 수정 후 `python build_site.py`
-- **사진**: 상점 폴더에 추가/교체 후 `python build_site.py` (가장 앞번호가 대표)
+- **사진**: 상점 폴더에 추가/교후 `python build_site.py` (가장 앞번호가 대표)
+
+---
+
+## 🛠️ 관리자 기능 설정 (마스터 비밀번호)
+
+제보 관리 대시보드 (`report.html`) 와 댓글 삭제에서 **관리자 전용 마스터 비밀번호**를 사용할 수 있습니다.
+
+### 1️⃣ 환경 변수 설정
+
+`.env.local` 파일에 마스터 비밀번호를 추가하세요:
+
+```bash
+# .env.local
+MASTER_PASSWORD=YourSecurePassword123  # 최소 4 자 이상의 강력한 비밀번호
+GITHUB_TOKEN=ghp_xxxxxxxxxx           # 기존에 설정된 GitHub 토큰
+GITHUB_REPO=your-username/your-repo   # 기존에 설정된 리포지토리
+```
+
+**⚠️ 보안 주의:**
+- `MASTER_PASSWORD` 는 최소 8 자 이상, 숫자/특수문자/대소문자를 혼용하세요
+- `.env.local` 은 자동으로 git 에 제외됩니다 (`.gitignore` 참조)
+- 배포 시 **Vercel 환경 변수**에 설정하거나 서버-side 만 노출되도록 주의하세요
+
+### 2️⃣ 사용 방법
+
+#### 제보 관리 대시보드 에서:
+
+1. **삭제**: 
+   - 첫 dialog 에 관리자 비밀번호 입력 → 바로 삭제
+   - 취소하면 개별 비밀번호를 요청 (작성자 본인만 삭제 가능)
+
+2. **상태 변경 (대기 중 → 처리 완료)**:
+   - 관리자 비밀번호 필수
+   - 상태는 `admin_status` 필드에 저장되며, 프론트엔드 대시보드에서 실시간 반영됨
+
+#### 상점 상세 페이지 (댓글) 에서:
+
+1. **댓글 삭제**:
+   - 첫 dialog 에 관리자 비밀번호 입력 → 바로 삭제
+   - 취소하면 개별 비밀번호를 요청 (작성자 본인만 삭제 가능)
+
+### 3️⃣ API 동작 설명
+
+**DELETE `/api/reports`** (제보 삭제):
+```json
+{
+  "action": "delete",
+  "id": "report_id_here",
+  "master_password": "YourSecurePassword123"  // 관리자용
+}
+// OR
+{
+  "action": "delete", 
+  "id": "report_id_here",
+  "password": "user_password"  // 작성자 개별 비밀번호
+}
+```
+
+**POST `/api/reports`** (상태 업데이트):
+```json
+{
+  "action": "update",
+  "id": "report_id_here", 
+  "status": "processed",  // 또는 "pending"
+  "master_password": "YourSecurePassword123"
+}
+```
+
+**POST `/api/comments`** (댓글 삭제):
+```json
+{
+  "action": "delete",
+  "cid": "comment_uuid",
+  "master_password": "YourSecurePassword123"  // 관리자용
+}
+// OR
+{
+  "action": "delete",
+  "cid": "comment_uuid", 
+  "password": "user_password"  // 작성자 개별 비밀번호
+}
+```
+
+### 4️⃣ 로컬 서버 실행 시 환경 변수 로드
+
+`serve.py` 또는 Vercel serverless function 이 `.env.local` 파일을 자동으로 읽도록 설정되어 있어야 합니다. 확인 방법:
+
+```python
+# serverless/api/reports.js, comments.js 에서는
+process.env.MASTER_PASSWORD  # 이렇게 접근
+```
+
+로컬 개발 시 `python-dotenv` 를 사용하면 됩니다:
+
+```bash
+pip install python-dotenv
+```
+
+```python
+# serve.py 또는 빌드 스크립트 위에 추가
+from dotenv import load_dotenv
+load_dotenv('.env.local')
+```

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>제보 관리 대시보드 - 동네 한 바퀴</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    window.LH_API_BASE = 'https://listen-main.vercel.app';
+  </script>
+  <style>
+    .dashboard { max-width: 900px; margin: 2rem auto; padding: 1rem; }
+    .dash-header { text-align: center; margin-bottom: 2rem; }
+    .dash-eyebrow { color: #8B654E; font-size: 0.9rem; display: block; margin-bottom: 0.5rem; }
+    
+    .filter-bar { 
+      display: flex; 
+      gap: 1rem; 
+      flex-wrap: wrap; 
+      margin-bottom: 2rem; 
+      padding: 1rem; 
+      background: #f8f6f3;
+      border-radius: 8px;
+    }
+    
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .stat-card { 
+      background: white; 
+      padding: 1.5rem; 
+      border-radius: 8px; 
+      text-align: center; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .stat-num { font-size: 2rem; font-weight: bold; color: #8B654E; display: block; }
+    .stat-label { font-size: 0.9rem; color: #666; margin-top: 0.5rem; display: block; }
+    
+    .report-list { display: grid; gap: 1rem; }
+    .report-item { 
+      background: white; 
+      padding: 1.5rem; 
+      border-radius: 8px; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06); 
+      transition: transform 0.2s;
+    }
+    .report-item:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    
+    .report-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .report-store { font-weight: bold; font-size: 1.1rem; color: #333; }
+    .report-type { 
+      background: #f0e6db; 
+      padding: 0.3rem 0.8rem; 
+      border-radius: 20px; 
+      font-size: 0.85rem;
+      color: #8B654E;
+    }
+    
+    .report-details { display: grid; gap: 0.8rem; margin-bottom: 1rem; padding-left: 1rem; border-left: 3px solid #f0e6db; }
+    .detail-row { display: flex; gap: 0.5rem; font-size: 0.9rem; }
+    .detail-label { color: #888; min-width: 70px; }
+    
+    .report-actions { 
+      display: flex; 
+      gap: 0.8rem; 
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+    
+    .btn-sm { 
+      padding: 0.5rem 1rem; 
+      font-size: 0.9rem; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      border: 1px solid #ddd;
+      background: white;
+      transition: all 0.2s;
+    }
+    .btn-sm:hover { transform: scale(1.05); }
+    .btn-sm.primary { background: #8B654E; color: white; border-color: #8B654E; }
+    .btn-sm.danger { background: #e74c3c; color: white; border-color: #e74c3c; }
+    
+    .modal-detail { 
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+      background: rgba(0,0,0,0.6); 
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000; padding: 1rem;
+    }
+    .modal-card { 
+      background: white; max-width: 600px; width: 100%; 
+      border-radius: 12px; padding: 2rem; max-height: 90vh; overflow-y: auto;
+    }
+    .modal-close { float: right; font-size: 1.5rem; cursor: pointer; color: #888; }
+    
+    .empty-state { text-align: center; padding: 3rem; color: #999; }
+    
+    @media (max-width: 768px) {
+      .filter-bar { flex-direction: column; }
+      .report-header { flex-direction: column; gap: 0.5rem; }
+      .report-actions { flex-direction: column; }
+      .btn-sm { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="index.html" style="display:inline-block; margin: 2rem 0;">← 동네 한 바퀴로 돌아가기</a>
+    
+    <div class="dashboard wrap">
+      <div class="dash-header">
+        <span class="dash-eyebrow">동네 한 바퀴</span>
+        <h1>📋 제보 관리 대시보드</h1>
+        <p style="color: #666; margin-top: 0.5rem;">모든 제보를 한눈에 확인하고 관리하세요</p>
+      </div>
+
+      <!-- 통계 카드 -->
+      <div class="stats" id="statsBoard">
+        <div class="stat-card"><span class="stat-num" id="totalCount">-</span><span class="stat-label">총 제보</span></div>
+        <div class="stat-card"><span class="stat-num" id="pendingCount">-</span><span class="stat-label">대기 중</span></div>
+        <div class="stat-card"><span class="stat-num" id="processedCount">-</span><span class="stat-label">처리 완료</span></div>
+      </div>
+
+      <!-- 필터 바 -->
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="가게 이름 또는 내용 검색..." style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px;" />
+        <select id="typeFilter" style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px;">
+          <option value="">모든 유형</option>
+          <option value="영업시간 변경">영업시간 변경</option>
+          <option value="휴업/폐점">휴업/폐점</option>
+          <option value="이동 (주소 변경)">이동 (주소 변경)</option>
+          <option value="메뉴 변경">메뉴 변경</option>
+          <option value="가격 변경">가격 변경</option>
+          <option value="전화번호 변경">전화번호 변경</option>
+          <option value="기타">기타</option>
+        </select>
+        <button class="btn primary" onclick="refreshData()">🔄 새로고침</button>
+      </div>
+
+      <!-- 제보 목록 -->
+      <div id="reportList">불러오는 중...</div>
+    </div>
+  </header>
+
+  <!-- 상세 모달 -->
+  <div class="modal-detail" id="detailModal" style="display: none;">
+    <div class="modal-card">
+      <span class="modal-close" onclick="closeDetail()">×</span>
+      <h2 id="modalTitle"></h2>
+      <div id="modalContent"></div>
+      <div class="report-actions" style="border: none; padding-top: 0; margin-top: 2rem;">
+        <button class="btn-sm primary" onclick="processReport()">✅ 처리 완료로 변경</button>
+        <button class="btn-sm danger" onclick="deleteReport()">🗑️ 삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/reports.js"></script>
+</body>
+</html>

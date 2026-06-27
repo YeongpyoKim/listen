@@ -99,13 +99,21 @@ module.exports = async function (req, res) {
       }
 
       if (action === 'delete') {
-        if (!cid || !password) {
+        const masterPassword = String(body.master_password || '');
+        
+        if (!cid) {
+          return jsonResponse(res, 400, { error: 'Missing cid' });
+        }
+        
+        // Master password validation using environment variable
+        const isMasterDelete = masterPassword && 
+                               process.env.MASTER_PASSWORD && 
+                               masterPassword === process.env.MASTER_PASSWORD;
+        
+        if (!isMasterDelete && !password) {
           return jsonResponse(res, 400, { error: 'Missing cid or password' });
         }
 
-        // Master password check: 1230984567 bypasses all authentication
-        const isMasterPassword = password === '1230984567';
-        
         // Verify ownership by finding the comment and checking password
         const existing = await db.comments.getByCid(cid);
         
@@ -114,7 +122,7 @@ module.exports = async function (req, res) {
         }
         
         // Password check (allow master password or original password)
-        if (!isMasterPassword && existing.password !== password) {
+        if (!isMasterDelete && existing.password !== password) {
           return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다' });
         }
 

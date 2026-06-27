@@ -88,7 +88,12 @@ module.exports = async function (req, res) {
 
     // ---------- GET — list reports (for admin) ----------
     if (req.method === 'GET') {
-      const issues = await db.githubRequest(`/repos/${process.env.GITHUB_REPO}/issues?labels=report&state=open&per_page=100`);
+      const url = new URL(req.url, 'http://localhost');
+      const statusFilter = url.searchParams.get('status');
+      
+      let stateParam = statusFilter === 'all' ? 'all' : 'open';
+      const issues = await db.githubRequest(`/repos/${process.env.GITHUB_REPO}/issues?labels=report&state=${stateParams}&per_page=100`);
+      
       const reports = issues.map(issue => {
         let data;
         try {
@@ -97,16 +102,28 @@ module.exports = async function (req, res) {
           data = {};
         }
         const parts = issue.title.split(':');
+        
+        // 상태 결정: admin_status 가 있으면 그것을 사용, 없으면 GitHub issue state 로 역추적
+        let status;
+        if (data.admin_status) {
+          status = data.admin_status;
+        } else if (issue.state === 'closed') {
+          status = 'processed';  // 과거 데이터 호환성
+        } else {
+          status = 'pending';
+        }
+        
         return {
-          report_id: parts[1] || data.report_id,
+          id: parts[1] || data.report_id,
           store_name: data.store_name || '',
           report_type: data.report_type || '',
           current_info: data.current_info || '',
           report_content: data.report_content || '',
           reference: data.reference || '',
           reporter: data.reporter || '익명',
-          password: data.password || '',
+          password: data.password || '',  // 삭제 시 필요하지만 실제 DB 에는 보관하지 않아도 좋음
           ts: data.ts || issue.created_at,
+          status: status,
         };
       }).sort((a, b) => Number(b.ts) - Number(a.ts));
 
@@ -171,14 +188,81 @@ module.exports = async function (req, res) {
       return jsonResponse(res, 201, { ok: true, report: data });
     }
 
-    // Delete report
+    // 상태 업데이트 (관리자 전용)
+    if (action === 'update') {
+      const reportId = String(body.id || '').trim();
+      const status = body.status;
+      const masterPassword = String(body.master_password || '');
+
+      if (!reportId) return jsonResponse(res, 400, { error: '"id" 이 필요합니다.' });
+      if (!status || !['pending', 'processed'].includes(status)) {
+        return jsonResponse(res, 400, { error: '유효하지 않은 상태값입니다.' });
+      }
+
+      // 마스터 비밀번호 검증 (관리자 인증)
+      const expectedMaster = process.env.MASTER_PASSWORD || '';
+      if (!expectedMaster) {
+        console.warn('⚠️ MASTER_PASSWORD 가 환경 변수에 설정되지 않았습니다!');
+        return jsonResponse(res, 500, { error: '서버 설정이 완료되지 않았습니다.' });
+      }
+
+      if (masterPassword !== expectedMaster) {
+        return jsonResponse(res, 403, { error: '관리자 비밀번호가 일치하지 않습니다.' });
+      }
+
+      // 제보 찾기
+      const issues = await db.githubRequest(`/repos/${process.env.GITHUB_REPO}/issues?labels=report&state=all&per_page=100`);
+      const issue = issues.find(i => {
+        try {
+          const data = JSON.parse(i.body || '{}');
+          return i.title === `report:${reportId}` || data.report_id === reportId;
+        } catch (e) {
+          return false;
+        }
+      });
+
+      if (!issue) return jsonResponse(res, 404, { error: '제보를 찾을 수 없습니다.' });
+
+      // 상태 업데이트
+      let issueData;
+      try {
+        issueData = JSON.parse(issue.body || '{}');
+      } catch (e) {
+        return jsonResponse(res, 500, { error: '데이터 오류' });
+      }
+
+      // GitHub Issue 의 body 에 상태 정보 추가
+      issueData.admin_status = status;
+      issueData.updated_by_admin = true;
+      issueData.admin_updated_at = Date.now().toString();
+
+      // 이슈 본체에 다시 저장 (GitHub API 로 patch)
+      await db.githubRequest(`/repos/${process.env.GITHUB_REPO}/issues/${issue.number}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ body: issueData })
+      });
+
+      return jsonResponse(res, 200, { ok: true, updated_id: reportId, new_status: status });
+    }
+
+    // Delete report (마스터 비밀번호 또는 개별 비밀번호)
     if (action === 'delete') {
-      const reportId = String(body.report_id || '').trim();
+      const reportId = String(body.report_id || body.id || '').trim();
       const password = String(body.password || '');
+      const masterPassword = String(body.master_password || '');
 
-      if (!reportId) return jsonResponse(res, 400, { error: '"report_id" is required.' });
+      if (!reportId) return jsonResponse(res, 400, { error: '"report_id" 또는 "id" 가 필요합니다.' });
 
-      // Find the report
+      // 관리자 비밀번호로 삭제 가능한지 확인
+      const isMasterDelete = process.env.MASTER_PASSWORD && masterPassword === process.env.MASTER_PASSWORD;
+
+      if (!isMasterDelete && !password) {
+        return jsonResponse(res, 400, { error: '비밀번호를 입력해 주세요.' });
+      } else if (!isMasterDelete && password.length < 4) {
+        return jsonResponse(res, 400, { error: '비밀번호는 4 자 이상이어야 합니다.' });
+      }
+
+      // 제보 찾기
       const issues = await db.githubRequest(`/repos/${process.env.GITHUB_REPO}/issues?labels=report&state=all&per_page=100`);
       const issue = issues.find(i => i.title === `report:${reportId}`);
 
@@ -191,7 +275,15 @@ module.exports = async function (req, res) {
         return jsonResponse(res, 500, { error: '데이터 오류' });
       }
 
-      if (reportData.password !== password) {
+      // 인증 확인: 관리자 비밀번호 또는 개별 비밀번호 중 하나라도 일치하면 삭제 허용
+      let authorized = false;
+      if (isMasterDelete) {
+        authorized = true;
+      } else if (reportData.password === password) {
+        authorized = true;
+      }
+
+      if (!authorized) {
         return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다.' });
       }
 
