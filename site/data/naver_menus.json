@@ -1,0 +1,1027 @@
+{
+  "맛대로촌닭": {
+    "place_id": "18411712",
+    "naver_url": "https://naver.me/5B0Ti39n",
+    "menu_url": "",
+    "items": [],
+    "fetched_at": "2026-06-28"
+  },
+  "양천칼국수": {
+    "place_id": "1678436384",
+    "naver_url": "https://naver.me/GeUtVT8R",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1678436384/menu/list",
+    "items": [
+      {
+        "name": "칼국수",
+        "price": "9,000원"
+      },
+      {
+        "name": "수제비",
+        "price": "9,000원"
+      },
+      {
+        "name": "만두국",
+        "price": "9,000원"
+      },
+      {
+        "name": "왕만두",
+        "price": "9,000원"
+      },
+      {
+        "name": "만두전골",
+        "price": "20,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "마곡오리": {
+    "place_id": "31266496",
+    "naver_url": "https://naver.me/xxY2OA5g",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/31266496/menu/list",
+    "items": [
+      {
+        "name": "논두렁 주물럭 대",
+        "price": "75,000원"
+      },
+      {
+        "name": "논두렁 주물럭 중",
+        "price": "60,000원"
+      },
+      {
+        "name": "주물럭 소",
+        "price": "40,000원"
+      },
+      {
+        "name": "불고기 대",
+        "price": "75,000원"
+      },
+      {
+        "name": "불고기 중",
+        "price": "60,000원"
+      },
+      {
+        "name": "불고기 소",
+        "price": "40,000원"
+      },
+      {
+        "name": "로스구이 대",
+        "price": "75,000원"
+      },
+      {
+        "name": "로스구이 중",
+        "price": "60,000원"
+      },
+      {
+        "name": "로스 소",
+        "price": "40,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "마곡면옥": {
+    "place_id": "2048121370",
+    "naver_url": "https://naver.me/GCgkW4gO",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/2048121370/menu/list",
+    "items": [
+      {
+        "name": "냉면 (비빔,물)",
+        "price": "8,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "들깨 칼국수",
+        "price": "8,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "집애김밥": {
+    "place_id": "1023313973",
+    "naver_url": "https://naver.me/GBF7AutO",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1023313973/menu/list",
+    "items": [
+      {
+        "name": "훈제란",
+        "price": "1,000원"
+      },
+      {
+        "name": "컵라면",
+        "price": "1,200원"
+      },
+      {
+        "name": "묵은지볶음김치",
+        "price": "700원"
+      },
+      {
+        "name": "유자단무지",
+        "price": "500원"
+      },
+      {
+        "name": "매실겨자소스",
+        "price": "700원"
+      },
+      {
+        "name": "떡볶이",
+        "price": "5,000원"
+      },
+      {
+        "name": "불고기꼬마",
+        "price": "3,000원"
+      },
+      {
+        "name": "참치꼬마",
+        "price": "2,800원"
+      },
+      {
+        "name": "치즈꼬마",
+        "price": "2,800원"
+      },
+      {
+        "name": "야채꼬마",
+        "price": "2,500원"
+      },
+      {
+        "name": "닭냉채키토",
+        "price": "5,800원"
+      },
+      {
+        "name": "묵참키토",
+        "price": "5,800원"
+      },
+      {
+        "name": "토닭키토",
+        "price": "5,500원"
+      },
+      {
+        "name": "샐러드키토",
+        "price": "5,500원"
+      },
+      {
+        "name": "버섯불고기",
+        "price": "5,500원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "옥담집": {
+    "place_id": "2047907594",
+    "naver_url": "https://naver.me/5EnZYEfN",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/2047907594/menu/list",
+    "items": [
+      {
+        "name": "알리오올리오",
+        "price": "9,900원",
+        "badge": "대표"
+      },
+      {
+        "name": "쉬림프 알리오올리오",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "봉골레파스타",
+        "price": "13,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "라구 파스타 (링귀니면)",
+        "price": "14,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "라자냐",
+        "price": "13,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "베이컨머쉬룸 토마토 파스타",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "까르보나라",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "베이컨 머쉬룸 로제 파스타",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "씨푸드 토마토파스타",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "씨푸드 크림 파스타",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "씨푸드 로제파스타",
+        "price": "12,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "아란치니(3pc)",
+        "price": "13,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "모시,홍합 화이트와인 스튜",
+        "price": "13,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "닭튀김 with 레몬 아이올리",
+        "price": "13,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "비프(우삼겹) 샐러드",
+        "price": "8,000원",
+        "badge": "대표"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "InLike": {
+    "place_id": "1136400514",
+    "naver_url": "https://naver.me/5fIpXXSG",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1136400514/menu/list",
+    "items": [
+      {
+        "name": "쑥케이크(조각)",
+        "price": "8,200원",
+        "badge": "대표"
+      },
+      {
+        "name": "인절미 쑥 라떼",
+        "price": "7,500원",
+        "badge": "대표"
+      },
+      {
+        "name": "귤케이크",
+        "price": "8,600원"
+      },
+      {
+        "name": "디카페인아메리카노",
+        "price": "5,000원"
+      },
+      {
+        "name": "아메리카노",
+        "price": "4,500원"
+      },
+      {
+        "name": "카페라떼",
+        "price": "4,500원"
+      },
+      {
+        "name": "인절미쑥라떼",
+        "price": "7,500원"
+      },
+      {
+        "name": "버터떡",
+        "price": "1,800원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "왕소풍김밥": {
+    "place_id": "1956020238",
+    "naver_url": "https://naver.me/5k7U7ZVD",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1956020238/menu/list",
+    "items": [
+      {
+        "name": "왕소풍김밥",
+        "price": "4,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "고소치즈김밥",
+        "price": "5,000원"
+      },
+      {
+        "name": "매콤어묵김밥",
+        "price": "5,000원"
+      },
+      {
+        "name": "땡초김밥",
+        "price": "5,000원"
+      },
+      {
+        "name": "스팸김밥",
+        "price": "5,300원"
+      },
+      {
+        "name": "참치김밥",
+        "price": "5,300원"
+      },
+      {
+        "name": "계란폭탄김밥",
+        "price": "5,500원"
+      },
+      {
+        "name": "매콤참치김밥",
+        "price": "5,500원"
+      },
+      {
+        "name": "스팸치즈김밥",
+        "price": "5,500원"
+      },
+      {
+        "name": "매콤진미채김밥",
+        "price": "5,800원"
+      },
+      {
+        "name": "치즈진미채김밥",
+        "price": "6,000원"
+      },
+      {
+        "name": "야채꼬마김밥",
+        "price": "2,800원"
+      },
+      {
+        "name": "참치꼬마김밥",
+        "price": "3,000원"
+      },
+      {
+        "name": "치즈꼬마김밥",
+        "price": "3,000원"
+      },
+      {
+        "name": "아메리카노 Ice",
+        "price": "1,500원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "선식당": {
+    "place_id": "1125280438",
+    "naver_url": "https://naver.me/xrSQQ5o8",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1125280438/menu/list",
+    "items": [
+      {
+        "name": "소고기 철판볶음밥",
+        "price": "9,500원"
+      },
+      {
+        "name": "사골양지쌀국수",
+        "price": "9,500원"
+      },
+      {
+        "name": "게살날치알철판볶음밥",
+        "price": "10,000원"
+      },
+      {
+        "name": "고르곤졸라파스타",
+        "price": "14,500원"
+      },
+      {
+        "name": "꿔바로우",
+        "price": "12,000원"
+      },
+      {
+        "name": "리코타쉬림프샐러드",
+        "price": "13,900원"
+      },
+      {
+        "name": "스파이시양지쌀국수(매움)",
+        "price": "11,000원"
+      },
+      {
+        "name": "우육탕면",
+        "price": "9,500원"
+      },
+      {
+        "name": "모짜렐라파스타",
+        "price": "14,500원"
+      },
+      {
+        "name": "그릴 스테이크 샐러드",
+        "price": "13,900원"
+      },
+      {
+        "name": "마늘간장치킨",
+        "price": "17,900원"
+      },
+      {
+        "name": "마레",
+        "price": "14,900원"
+      },
+      {
+        "name": "조개탕면",
+        "price": "10,500원"
+      },
+      {
+        "name": "그릴스테이크철판볶음밥",
+        "price": "14,500원"
+      },
+      {
+        "name": "토마토커틀렛",
+        "price": "13,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "태문네": {
+    "place_id": "37842202",
+    "naver_url": "https://naver.me/x3jFZaif",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/37842202/menu/list",
+    "items": [
+      {
+        "name": "갈매기살 마늘 양념",
+        "price": "14,000원"
+      },
+      {
+        "name": "갈매기살 소금구이",
+        "price": "14,000원"
+      },
+      {
+        "name": "된장찌개 추가 소",
+        "price": "4,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "마라홍 마라탕": {
+    "place_id": "2036051969",
+    "naver_url": "https://naver.me/5eDryCUH",
+    "menu_url": "",
+    "items": [],
+    "fetched_at": "2026-06-28"
+  },
+  "카페 까사모멘토": {
+    "place_id": "2048356749",
+    "naver_url": "https://naver.me/5ajqP6g9",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/2048356749/menu/list",
+    "items": [
+      {
+        "name": "바스크치즈케이크",
+        "price": "6,500원",
+        "badge": "대표"
+      },
+      {
+        "name": "프렌치토스트",
+        "price": "10,500원"
+      },
+      {
+        "name": "생자몽듬뿍빙수",
+        "price": "14,500원"
+      },
+      {
+        "name": "생망고빙수",
+        "price": "19,500원"
+      },
+      {
+        "name": "카페라떼",
+        "price": "4,800원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "빙그레식당": {
+    "place_id": "2073505347",
+    "naver_url": "https://naver.me/GMP2az6F",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/2073505347/menu/list",
+    "items": [
+      {
+        "name": "국내산 급냉삼겹삷",
+        "price": "14,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "국내산 차돌박이",
+        "price": "19,800원"
+      },
+      {
+        "name": "홍삼세트(홍어무침과냉삼세트)2인",
+        "price": "47,000원"
+      },
+      {
+        "name": "홍차세트(홍어무침과 차돌박이세트)",
+        "price": "58,000원"
+      },
+      {
+        "name": "육차세트(고기에 고기를싸먹는)",
+        "price": "58,000원"
+      },
+      {
+        "name": "홍어무침",
+        "price": "20,000원"
+      },
+      {
+        "name": "팔도 비빔면",
+        "price": "6,900원"
+      },
+      {
+        "name": "백숙백반",
+        "price": "11,000원"
+      },
+      {
+        "name": "해물듬뿍.된장찌게",
+        "price": "9,900원"
+      },
+      {
+        "name": "해물 짬뽕순두부",
+        "price": "9,900원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "장수밥상": {
+    "place_id": "1721829726",
+    "naver_url": "https://naver.me/FxFKuLEW",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1721829726/menu/list",
+    "items": [
+      {
+        "name": "오징어백반",
+        "price": "10,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "갈치조림",
+        "price": "10,000원"
+      },
+      {
+        "name": "고등어구이",
+        "price": "10,000원"
+      },
+      {
+        "name": "차돌된장찌개",
+        "price": "9,000원"
+      },
+      {
+        "name": "제육볶음",
+        "price": "10,000원"
+      },
+      {
+        "name": "김치찌개",
+        "price": "9,000원"
+      },
+      {
+        "name": "백반",
+        "price": "9,000원"
+      },
+      {
+        "name": "계란찜",
+        "price": "5,000원"
+      },
+      {
+        "name": "삼겹살",
+        "price": "15,000원"
+      },
+      {
+        "name": "차돌박이",
+        "price": "16,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "매일향 중화요리": {
+    "place_id": "38698196",
+    "naver_url": "https://naver.me/5UEnUkPq",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/38698196/menu/list",
+    "items": [
+      {
+        "name": "삼선짬뽕",
+        "price": "14,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "등심탕수육+짜장1",
+        "price": "22,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "1. 깐풍기+짜장",
+        "price": "26,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "등심탕수육+짜장2",
+        "price": "25,000원"
+      },
+      {
+        "name": "등심탕수육+짜1+짬1",
+        "price": "26,000원"
+      },
+      {
+        "name": "등심탕수육+짬뽕1",
+        "price": "23,000원"
+      },
+      {
+        "name": "등심탕수육+짬뽕2",
+        "price": "27,000원"
+      },
+      {
+        "name": "크림탕수육+짜2",
+        "price": "28,000원"
+      },
+      {
+        "name": "크림탕수육+짜1+짬1",
+        "price": "29,000원"
+      },
+      {
+        "name": "크림탕수육+짬2",
+        "price": "30,000원"
+      },
+      {
+        "name": "크림탕수육+간2",
+        "price": "30,000원"
+      },
+      {
+        "name": "크림탕수육+차돌짬뽕2",
+        "price": "36,000원"
+      },
+      {
+        "name": "1. 양장피+짜장2",
+        "price": "31,000원"
+      },
+      {
+        "name": "2. 양장피+짬뽕2",
+        "price": "34,000원"
+      },
+      {
+        "name": "3. 양장피+삼선쟁반짜장(2인)",
+        "price": "36,000원"
+      },
+      {
+        "name": "짬뽕국물(공기)",
+        "price": "1,000원"
+      },
+      {
+        "name": "짬뽕국물(대접)",
+        "price": "2,000원"
+      },
+      {
+        "name": "1. 팔보채+짜장2",
+        "price": "33,000원"
+      },
+      {
+        "name": "2. 팔보채+짬뽕2",
+        "price": "35,000원"
+      },
+      {
+        "name": "3. 팔보채+삼선쟁반짜장(2인)",
+        "price": "38,000원"
+      },
+      {
+        "name": "2. 깐풍기+짬뽕1",
+        "price": "27,000원"
+      },
+      {
+        "name": "3. 깐풍기+삼선쟁반짜장(2인)",
+        "price": "32,000원"
+      },
+      {
+        "name": "1. 깐쇼새우+짜장2",
+        "price": "29,000원"
+      },
+      {
+        "name": "2. 깐쇼새우+짬뽕2",
+        "price": "31,000원"
+      },
+      {
+        "name": "3. 깐쇼새우+삼선쟁반짜장(2인)",
+        "price": "34,000원"
+      },
+      {
+        "name": "A코스. 탕수육+양장피+물만두",
+        "price": "53,000원"
+      },
+      {
+        "name": "B코스. 탕수육+유산슬+물만두",
+        "price": "58,000원"
+      },
+      {
+        "name": "C코스. 탕수육+팔보채+물만두",
+        "price": "58,000원"
+      },
+      {
+        "name": "D코스. 탕수육+팔보채+양장피+삼선짬뽕탕+물만두",
+        "price": "100,000원"
+      },
+      {
+        "name": "등심탕수육(小)",
+        "price": "22,000원"
+      },
+      {
+        "name": "등심탕수육(中)",
+        "price": "26,000원"
+      },
+      {
+        "name": "등심탕수육(大)",
+        "price": "32,000원"
+      },
+      {
+        "name": "찹쌀탕수육(小)",
+        "price": "26,000원"
+      },
+      {
+        "name": "찹쌀탕수육(中)",
+        "price": "32,000원"
+      },
+      {
+        "name": "짜장",
+        "price": "7,000원"
+      },
+      {
+        "name": "간짜장",
+        "price": "9,000원"
+      },
+      {
+        "name": "삼선간짜장",
+        "price": "14,000원"
+      },
+      {
+        "name": "삼선쟁반짜장(1인분)",
+        "price": "11,000원"
+      },
+      {
+        "name": "삼선쟁반짜장(2인분)",
+        "price": "20,000원"
+      },
+      {
+        "name": "볶음밥",
+        "price": "9,000원"
+      },
+      {
+        "name": "삼선볶음밥",
+        "price": "13,000원"
+      },
+      {
+        "name": "제육덮밥",
+        "price": "10,000원"
+      },
+      {
+        "name": "잡채밥",
+        "price": "10,000원"
+      },
+      {
+        "name": "마파두부밥",
+        "price": "10,000원"
+      },
+      {
+        "name": "짬짜면",
+        "price": "11,000원"
+      },
+      {
+        "name": "볶짜면",
+        "price": "12,000원"
+      },
+      {
+        "name": "볶짬면",
+        "price": "12,000원"
+      },
+      {
+        "name": "탕짜면",
+        "price": "13,000원"
+      },
+      {
+        "name": "탕짬면",
+        "price": "13,000원"
+      },
+      {
+        "name": "물냉면",
+        "price": "11,000원"
+      },
+      {
+        "name": "비빔냉면",
+        "price": "11,000원"
+      },
+      {
+        "name": "콩국수",
+        "price": "11,000원"
+      },
+      {
+        "name": "중국냉면",
+        "price": "15,000원"
+      },
+      {
+        "name": "삼선냉짬뽕",
+        "price": "15,000원"
+      },
+      {
+        "name": "등심탕수육+물냉면",
+        "price": "26,000원"
+      },
+      {
+        "name": "등심탕수육+비빔냉면",
+        "price": "26,000원"
+      },
+      {
+        "name": "등심탕수육+중국냉면",
+        "price": "29,000원"
+      },
+      {
+        "name": "등심탕수육+삼선냉짬뽕",
+        "price": "28,000원"
+      },
+      {
+        "name": "군만두",
+        "price": "6,000원"
+      },
+      {
+        "name": "물만두",
+        "price": "6,000원"
+      },
+      {
+        "name": "콜라(1.25L)",
+        "price": "3,000원"
+      },
+      {
+        "name": "콜라(캔콜라)",
+        "price": "2,000원"
+      },
+      {
+        "name": "캔사이다",
+        "price": "2,000원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "김밥365": {
+    "place_id": "11693214",
+    "naver_url": "https://naver.me/Fw7qsbaZ",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/11693214/menu/list",
+    "items": [
+      {
+        "name": "떡만두국",
+        "price": "6,500원",
+        "badge": "대표"
+      },
+      {
+        "name": "김치볶음밥",
+        "price": "7,500원",
+        "badge": "대표"
+      },
+      {
+        "name": "돈까스도시락",
+        "price": "8,500원",
+        "badge": "대표"
+      },
+      {
+        "name": "제육비빔밥도시락",
+        "price": "9,000원",
+        "badge": "대표"
+      },
+      {
+        "name": "쫄만이",
+        "price": "12,900원",
+        "badge": "대표"
+      },
+      {
+        "name": "참치주먹밥",
+        "price": "2,800원"
+      },
+      {
+        "name": "김치주먹밥",
+        "price": "2,800원"
+      },
+      {
+        "name": "믹스주먹밥",
+        "price": "3,300원"
+      },
+      {
+        "name": "불고기 주먹밥",
+        "price": "4,400원"
+      },
+      {
+        "name": "와사비참치주먹밥",
+        "price": "3,900원"
+      },
+      {
+        "name": "떡볶이",
+        "price": "4,500원"
+      },
+      {
+        "name": "치즈떡볶이",
+        "price": "5,000원"
+      },
+      {
+        "name": "어묵",
+        "price": "4,000원"
+      },
+      {
+        "name": "꼬마물만두",
+        "price": "4,500원"
+      },
+      {
+        "name": "튀김만두",
+        "price": "5,000원"
+      },
+      {
+        "name": "떡국",
+        "price": "6,500원"
+      },
+      {
+        "name": "만두국",
+        "price": "6,500원"
+      },
+      {
+        "name": "돈까스세트도시락",
+        "price": "9,000원"
+      },
+      {
+        "name": "비빔밥",
+        "price": "7,500원"
+      },
+      {
+        "name": "카레밥",
+        "price": "7,500원"
+      },
+      {
+        "name": "순두부",
+        "price": "7,500원"
+      },
+      {
+        "name": "김치찌개",
+        "price": "7,500원"
+      },
+      {
+        "name": "참치찌개",
+        "price": "7,500원"
+      },
+      {
+        "name": "돈까스 (단품)",
+        "price": "4,500원"
+      },
+      {
+        "name": "공기밥",
+        "price": "1,500원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  },
+  "빵굼터": {
+    "place_id": "11807500",
+    "naver_url": "https://naver.me/5UEfUCvy",
+    "menu_url": "",
+    "items": [],
+    "fetched_at": "2026-06-28"
+  },
+  "금수저 아구찜": {
+    "place_id": "2075493615",
+    "naver_url": "https://naver.me/5Hy8kD0f",
+    "menu_url": "",
+    "items": [],
+    "fetched_at": "2026-06-28"
+  },
+  "마곡명인 도너츠 꽈배기": {
+    "place_id": "2085612334",
+    "naver_url": "https://naver.me/x3cdujHo",
+    "menu_url": "",
+    "items": [],
+    "fetched_at": "2026-06-28"
+  },
+  "커피상담원": {
+    "place_id": "1235002435",
+    "naver_url": "https://map.naver.com/p/entry/place/1235002435?lng=126.8225473&lat=37.572181&placePath=%2Fhome%3Ffrom%3Dmap%26fromPanelNum%3D1%26additionalHeight%3D76%26timestamp%3D202606252243%26locale%3Dko%26svcName%3Dmap_pcv5&entry=plt&searchType=place",
+    "menu_url": "https://pcmap.place.naver.com/restaurant/1235002435/menu/list",
+    "items": [
+      {
+        "name": "아메리카노",
+        "price": "2,500원"
+      },
+      {
+        "name": "카페라떼",
+        "price": "3,000원"
+      },
+      {
+        "name": "내입클레버🍀",
+        "price": "3,500원"
+      },
+      {
+        "name": "찬추출커피💧",
+        "price": "3,000원"
+      },
+      {
+        "name": "찬추출라떼💧",
+        "price": "3,500원"
+      },
+      {
+        "name": "기품 추가",
+        "price": "500원"
+      },
+      {
+        "name": "짠추출커피",
+        "price": "3,000원"
+      },
+      {
+        "name": "짠추출라떼",
+        "price": "3,500원"
+      },
+      {
+        "name": "크닐라떼😲",
+        "price": "3,500원"
+      },
+      {
+        "name": "스티듯안녕👋",
+        "price": "3,500원"
+      }
+    ],
+    "fetched_at": "2026-06-28"
+  }
+}

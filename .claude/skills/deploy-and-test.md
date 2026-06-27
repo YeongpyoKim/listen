@@ -177,6 +177,87 @@ gh pr create --title "제목" --body "내용"
 
 ---
 
+## 7️⃣ 네이버 지도 메뉴 수집 (Playwright)
+
+네이버 지도 점포 페이지에서 메뉴명·가격·「대표」뱃지를 Playwright 로 수집해 각 점포 상세 페이지 `menu_items` 를 보강합니다.
+
+### 관련 파일
+
+| 파일 | 역할 |
+|------|------|
+| `fetch_naver_menus.py` | Playwright 로 전 점포 메뉴 스크래핑 |
+| `site/data/naver_menus.json` | 수집 결과 (점포명 → items 배열) |
+| `build_site.py` | 네이버 메뉴 우선 병합, 없으면 `signature` 파싱 fallback |
+| `site/js/store.js` | 메뉴 카드·「대표」뱃지 렌더링 |
+| `site/css/styles.css` | `.menu-card`, `.menu-card-badge` 스타일 |
+| `상점 리스트.xlsx` B열 | 네이버 URL (naver.me 하이퍼링크) |
+
+### 사전 준비
+
+```bash
+pip install playwright openpyxl
+playwright install chromium
+```
+
+### 수집 → 빌드 워크플로우
+
+```bash
+# 1. 네이버 메뉴 전 점포 수집 (~1.5분, 20개 기준)
+python3 fetch_naver_menus.py
+
+# 2. stores.json 재생성 (naver_menus 우선 반영)
+python3 build_site.py
+
+# 3. 커밋·푸시·배포 (아래 1️⃣ 참고)
+git add fetch_naver_menus.py site/data/naver_menus.json build_site.py site/data/stores.json
+git commit -m "feat: 네이버 지도 메뉴 Playwright 수집 및 점포 페이지 반영"
+git push origin main
+```
+
+### 스크래핑 동작 요약
+
+1. 엑셀 B열 `naver.me` URL → Playwright 로 이동 → 리다이렉트 URL 에서 `place_id` 추출
+2. 메뉴 URL 순서 시도: `restaurant` → `cafe` → `place`  
+   `https://pcmap.place.naver.com/{biz}/{place_id}/menu/list`
+3. DOM: `.place_section_content li` — 첫 줄 「대표/인기」뱃지, 메뉴명(첫 줄), 마지막 줄 가격
+4. 필터: 가격 `\d{1,3}(,\d{3})*원` 필수, 이름 55자 이하, 「동영상」「다이닝코드」 등 노이즈 제외
+
+### fallback
+
+| 상황 | 동작 |
+|------|------|
+| 네이버 URL 없음 | `signature` 필드 쉼표 분리 → `menu_items` |
+| 메뉴 탭 없음 / DOM 불일치 | 동일하게 `signature` fallback |
+| 메뉴 이미지 폴더 | `{점포폴더}/메뉴*.jpg` → `menu_images` (빌드 시 별도 처리) |
+
+### 수집 결과 참고 (2026-06-28 기준)
+
+- **15/20** 점포 메뉴 수집 성공
+- fallback 5개: 맛대로촌닭, 마라홍 마라탕, 빵굼터, 금수저 아구찜, 마곡명인 도너츠 꽈배기
+
+### 📋 메뉴 카드 검증 체크리스트
+
+| # | 항목 | 확인 방법 | 상태 |
+|---|------|----------|------|
+| 1 | 메뉴 카드 표시 | 상세 페이지 「메뉴」 섹션에 이름·가격 카드 | ☐ |
+| 2 | 대표 뱃지 | 「대표」 메뉴에 금색 뱃지 표시 | ☐ |
+| 3 | 네이버 연동 점포 | 양천칼국수·집애김밥 등 개별 가격(예: 9,000원) | ☐ |
+| 4 | fallback 점포 | 수집 실패 점포는 시그니처 기반 메뉴명 유지 | ☐ |
+| 5 | 메뉴판 이미지 | `메뉴.jpg` 등 `menu_images` 갤러리 표시 | ☐ |
+| 6 | 재수집 | `fetch_naver_menus.py` 재실행 후 `build_site.py` → 배포 | ☐ |
+
+### 문제 해결
+
+| 증상 | 원인 | 해결 방법 |
+|------|------|----------|
+| `python` not found | python3 만 설치됨 | `python3 fetch_naver_menus.py` 사용 |
+| 0 menus 전부 | Playwright 미설치 | `playwright install chromium` |
+| place_id 추출 실패 | naver.me 만료·URL 변경 | 엑셀 B열 URL 갱신 |
+| 메뉴명이 설명과 붙음 | 네이버 DOM 다중 줄 | 스크립트는 첫 줄만 이름으로 사용 |
+| 동영상 등 노이즈 | 가격 없는 li | 가격 필수 필터로 제외됨 |
+
+---
+
 ## 📌 메모
 
 - Vercel 자동 배포: GitHub main 브랜치 푸시 후 보통 1-2 분 소요

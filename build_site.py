@@ -1,18 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 build_site.py — 경청 프로젝트 '동네 한 바퀴' 사이트 데이터 빌더
-
-하는 일:
-  1) '상점 리스트.xlsx' 에서 21개 상점의 사실 정보(메뉴/가격/영업시간/좌석/주차 등)를 읽는다.
-  2) 각 상점 폴더에서 사진을 자연정렬(0,1,2,...,10)하여 '가장 앞번호'를 대표사진으로 선정한다.
-  3) site_content.py 의 감성 콘텐츠(메시지/스토리/주일안내/주소/전화/색감)를 결합한다.
-  4) 사진을 site/assets/<id>/ 로 복사하고, site/data/stores.json 을 생성한다.
-
-폴더가 없는 상점(블리스냅/태문네/은행나무집/김밥365)은 placeholder=true 로 표시되어
-프런트엔드에서 감성 그라디언트 카드로 렌더링된다. 나중에 실제 사진을 폴더에 넣고 다시 실행하면
-자동으로 대표사진/갤러리가 채워진다.
-
-실행:  python build_site.py
 """
 import json
 import re
@@ -28,10 +16,10 @@ XLSX = ROOT / "상점 리스트.xlsx"
 SITE = ROOT / "site"
 ASSETS = SITE / "assets"
 DATA = SITE / "data"
+NAVER_MENUS = DATA / "naver_menus.json"
 
 IMG_EXT = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
-# 엑셀 헤더(3행) 기준 컬럼 매핑 (B열=인덱스1 부터)
 COLS = [
     "name", "type", "manager", "signature", "price", "hours",
     "seats", "baby_chair", "parking", "history", "tip", "charm",
@@ -39,9 +27,8 @@ COLS = [
 
 
 def natural_key(path: Path):
-    """파일명 안의 첫 숫자를 기준으로 자연 정렬. 숫자 없으면 맨 뒤로."""
     m = re.search(r"(\d+)", path.stem)
-    return (0, int(m.group(1))) if m else (1, 0)
+    return (0, int(m.group(1))) if m else (1, path.stem)
 
 
 def slugify(index: int) -> str:
@@ -68,10 +55,49 @@ def read_excel():
 def collect_images(store_name: str):
     folder = ROOT / store_name
     if not folder.is_dir():
-        return []
+        return [], []
     imgs = [p for p in folder.iterdir() if p.is_file() and p.suffix.lower() in IMG_EXT]
-    imgs.sort(key=natural_key)
-    return imgs
+    scene, menu = [], []
+    for p in imgs:
+        if "메뉴" in p.name:
+            menu.append(p)
+        else:
+            scene.append(p)
+    scene.sort(key=natural_key)
+    menu.sort(key=natural_key)
+    return scene, menu
+
+
+def load_naver_menus():
+    if not NAVER_MENUS.exists():
+        return {}
+    try:
+        return json.loads(NAVER_MENUS.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+
+
+def parse_menu_items(signature: str, price: str):
+    if not signature:
+        return []
+    items = []
+    for part in re.split(r"[,，\n/]+", signature):
+        name = part.strip()
+        if not name or len(name) > 60:
+            continue
+        item = {"name": name}
+        if price and len(price) < 40:
+            item["price"] = price
+        items.append(item)
+    return items[:12]
+
+
+def pick_menu_items(name, signature, price, naver_menus):
+    naver = naver_menus.get(name, {})
+    items = naver.get("items") or []
+    if items:
+        return items
+    return parse_menu_items(signature, price)
 
 
 def main():
@@ -79,6 +105,7 @@ def main():
     DATA.mkdir(parents=True, exist_ok=True)
 
     excel_rows = read_excel()
+    naver_menus = load_naver_menus()
     stores = []
 
     for idx, rec in enumerate(excel_rows, start=1):
@@ -86,23 +113,38 @@ def main():
         sid = slugify(idx)
         content = CONTENT.get(name, {})
 
-        images = collect_images(name)
+        scene_imgs, menu_imgs = collect_images(name)
         dest_dir = ASSETS / sid
         gallery = []
+        menu_images = []
         main_image = ""
 
-        if images:
-            # 기존 자산 정리 후 재복사 (idempotent)
-            if dest_dir.exists():
-                shutil.rmtree(dest_dir)
+        if dest_dir.exists():
+            shutil.rmtree(dest_dir)
+        if scene_imgs or menu_imgs:
             dest_dir.mkdir(parents=True, exist_ok=True)
-            for i, src in enumerate(images):
+
+            for i, src in enumerate(scene_imgs):
                 ext = src.suffix.lower()
                 fname = f"{i:02d}{ext}"
                 shutil.copy2(src, dest_dir / fname)
-                rel = f"assets/{sid}/{fname}"
-                gallery.append(rel)
-            main_image = gallery[0]
+                gallery.append(f"assets/{sid}/{fname}")
+
+            for src in menu_imgs:
+                stem = re.sub(r"[^\w가-힣]", "", src.stem) or "menu"
+                fname = f"{stem}{src.suffix.lower()}"
+                dest = dest_dir / fname
+                n = 1
+                while dest.exists():
+                    fname = f"{stem}{n}{src.suffix.lower()}"
+                    dest = dest_dir / fname
+                    n += 1
+                shutil.copy2(src, dest_dir / fname)
+                menu_images.append(f"assets/{sid}/{fname}")
+
+            main_image = gallery[0] if gallery else ""
+
+        menu_items = pick_menu_items(name, rec["signature"], rec["price"], naver_menus)
 
         store = {
             "id": sid,
@@ -128,6 +170,8 @@ def main():
             "naver_url": rec["naver_url"],
             "main_image": main_image,
             "gallery": gallery,
+            "menu_images": menu_images,
+            "menu_items": menu_items,
             "placeholder": main_image == "",
         }
         if content.get("sunday_rule"):

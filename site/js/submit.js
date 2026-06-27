@@ -130,9 +130,10 @@
     msgEl.classList.toggle("err", !!isErr);
   }
 
-  // ---- 성도들이 추천한 맛집 (카드 형식) ----
-  const section = document.getElementById("suggestSection");
-  const grid = document.getElementById("suggestGrid");
+  // ---- 성도들이 추천한 맛집: 별도 섹션이 있을 때만 로드 ----
+  const section = document.getElementById("submissionsSection");
+  const grid = document.getElementById("submissionsGrid");
+  if (!section || !grid) return;
 
   function esc(t) {
     return String(t == null ? "" : t)
@@ -196,7 +197,6 @@
   }
 
   function loadSubmissions() {
-    if (!section || !grid) return;
     fetch(API)
       .then((r) => r.json())
       .then((d) => {

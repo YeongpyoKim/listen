@@ -59,11 +59,16 @@
       hero = `<div class="bg" style="background-image:url('${s.main_image}')"></div>`;
     }
 
-    const galleryImgs = (s.gallery || []).slice(1);
-    const galleryHTML = galleryImgs.length
+    const sceneImgs = [];
+    if (s.main_image) sceneImgs.push(s.main_image);
+    (s.gallery || []).forEach((g) => {
+      if (g && !sceneImgs.includes(g)) sceneImgs.push(g);
+    });
+
+    const galleryHTML = sceneImgs.length
       ? `<section class="section"><div class="wrap">
            <div class="gallery-label">우리 가게 한 장면</div>
-           <div class="gallery">${galleryImgs
+           <div class="gallery">${sceneImgs
              .map((g) => `<img loading="lazy" src="${g}" alt="${esc(s.name)}" data-zoom />`)
              .join("")}</div>
          </div></section>`
@@ -76,10 +81,24 @@
       ? `<a class="btn" href="tel:${s.phone.replace(/[^0-9+]/g, "")}">📞 ${esc(s.phone)}</a>`
       : "";
 
-    // 메뉴 이미지 처리: 폴더 내에 '메뉴'가 포함된 파일이 있으면 별도 섹션으로 노출
-    const menuImg = (s.gallery || []).find((g) => g.toLowerCase().includes("메뉴"));
-    const menuSection = menuImg
-      ? `<section class="section"><div class="wrap"><div class="gallery-label">메뉴</div><div class="menu-img"><img src="${menuImg}" alt="${esc(s.name)} 메뉴" /></div></div></section>`
+    const menuItems = s.menu_items || [];
+    const menuImgs = s.menu_images || [];
+    let menuInner = "";
+    if (menuItems.length) {
+      menuInner += `<div class="menu-cards">${menuItems
+        .map((m) => {
+          const badge = m.badge ? `<span class="menu-card-badge">${esc(m.badge)}</span>` : "";
+          return `<div class="menu-card">${badge}<div class="menu-card-name">${esc(m.name)}</div>${m.price ? `<div class="menu-card-price">${esc(m.price)}</div>` : ""}</div>`;
+        })
+        .join("")}</div>`;
+    }
+    if (menuImgs.length) {
+      menuInner += `<div class="menu-imgs">${menuImgs
+        .map((src) => `<img loading="lazy" src="${src}" alt="${esc(s.name)} 메뉴" data-zoom />`)
+        .join("")}</div>`;
+    }
+    const menuSection = menuInner
+      ? `<section class="section"><div class="wrap"><div class="gallery-label">메뉴</div>${menuInner}</div></section>`
       : "";
 
     app.innerHTML = `
