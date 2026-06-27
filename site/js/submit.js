@@ -118,7 +118,10 @@
         loadSubmissions();
         setTimeout(close, 1600);
       })
-      .catch(() => msg("등록 중 문제가 발생했어요.", true))
+      .catch((err) => {
+        console.error("Submission error:", err);
+        msg("등록 중 문제가 발생했어요. (Error: " + (err.message || "unknown") + ")", true);
+      })
       .finally(() => (submitBtn.disabled = false));
   });
 

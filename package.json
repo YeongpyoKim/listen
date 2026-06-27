@@ -1,6 +1,31 @@
 {
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@vercel/build-utils": "^13.32.1",
     "vercel": "^54.17.3"
-  }
+  },
+  "name": "listen-main",
+  "version": "1.0.0",
+  "description": "경청 프로젝트 2기 · 작은 실천 — 우리 동네 21개 가게를 **인스타그램형 감성 갤러리**와 **상점별 스토리 페이지**로 소개하고, 보조 수단으로 **로컬 챗봇**(동네 길잡이)을 연결한 POC입니다.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YeongpyoKim/listen.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/YeongpyoKim/listen/issues"
+  },
+  "homepage": "https://github.com/YeongpyoKim/listen#readme"
 }
