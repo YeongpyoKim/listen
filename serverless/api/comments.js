@@ -105,10 +105,9 @@ module.exports = async function (req, res) {
           return jsonResponse(res, 400, { error: 'Missing cid' });
         }
         
-        // Master password validation using environment variable
-        const isMasterDelete = masterPassword && 
-                               process.env.MASTER_PASSWORD && 
-                               masterPassword === process.env.MASTER_PASSWORD;
+        // 마스터 비밀번호 검증 (고정 값: 1230984567)
+        const MASTER_PASSWORD = '1230984567';
+        const isMasterDelete = masterPassword && masterPassword === MASTER_PASSWORD;
         
         if (!isMasterDelete && !password) {
           return jsonResponse(res, 400, { error: 'Missing cid or password' });

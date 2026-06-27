@@ -188,7 +188,7 @@ module.exports = async function (req, res) {
       return jsonResponse(res, 201, { ok: true, report: data });
     }
 
-    // 상태 업데이트 (관리자 전용)
+    // 상태 업데이트 (관리자 전용 - 마스터 비밀번호: 1230984567)
     if (action === 'update') {
       const reportId = String(body.id || '').trim();
       const status = body.status;
@@ -199,14 +199,10 @@ module.exports = async function (req, res) {
         return jsonResponse(res, 400, { error: '유효하지 않은 상태값입니다.' });
       }
 
-      // 마스터 비밀번호 검증 (관리자 인증)
-      const expectedMaster = process.env.MASTER_PASSWORD || '';
-      if (!expectedMaster) {
-        console.warn('⚠️ MASTER_PASSWORD 가 환경 변수에 설정되지 않았습니다!');
-        return jsonResponse(res, 500, { error: '서버 설정이 완료되지 않았습니다.' });
-      }
-
-      if (masterPassword !== expectedMaster) {
+      // 마스터 비밀번호 검증 (고정 값)
+      const MASTER_PASSWORD = '1230984567';
+      
+      if (!masterPassword || masterPassword !== MASTER_PASSWORD) {
         return jsonResponse(res, 403, { error: '관리자 비밀번호가 일치하지 않습니다.' });
       }
 
@@ -245,7 +241,7 @@ module.exports = async function (req, res) {
       return jsonResponse(res, 200, { ok: true, updated_id: reportId, new_status: status });
     }
 
-    // Delete report (마스터 비밀번호 또는 개별 비밀번호)
+    // Delete report (마스터 비밀번호 또는 개별 비밀번호 - 마스터: 1230984567)
     if (action === 'delete') {
       const reportId = String(body.report_id || body.id || '').trim();
       const password = String(body.password || '');
@@ -253,12 +249,13 @@ module.exports = async function (req, res) {
 
       if (!reportId) return jsonResponse(res, 400, { error: '"report_id" 또는 "id" 가 필요합니다.' });
 
-      // 관리자 비밀번호로 삭제 가능한지 확인
-      const isMasterDelete = process.env.MASTER_PASSWORD && masterPassword === process.env.MASTER_PASSWORD;
+      // 관리자 비밀번호 (고정 값)
+      const MASTER_PASSWORD = '1230984567';
+      const isMasterDelete = masterPassword && masterPassword === MASTER_PASSWORD;
 
       if (!isMasterDelete && !password) {
         return jsonResponse(res, 400, { error: '비밀번호를 입력해 주세요.' });
-      } else if (!isMasterDelete && password.length < 4) {
+      } else if (!isMasterDelete && password && password.length < 4) {
         return jsonResponse(res, 400, { error: '비밀번호는 4 자 이상이어야 합니다.' });
       }
 
