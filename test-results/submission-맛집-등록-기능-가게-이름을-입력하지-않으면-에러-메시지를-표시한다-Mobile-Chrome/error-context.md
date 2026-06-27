@@ -225,7 +225,7 @@ Call log:
         - generic [ref=e193]: 🍽️
         - generic [ref=e194]:
           - generic [ref=e195]: 성도 추천
-          - heading "테스트 가게 1782530400867" [level=3] [ref=e196]
+          - heading "테스트 가게 1782532169672" [level=3] [ref=e196]
           - generic [ref=e197]: 한식 · 테스트 메뉴
           - generic [ref=e198]: 📍 서울 강서구 테스트동
           - generic [ref=e199]: ☎️ 02-1234-5678
@@ -238,7 +238,7 @@ Call log:
         - generic [ref=e207]: 🍽️
         - generic [ref=e208]:
           - generic [ref=e209]: 성도 추천
-          - heading "테스트 가게 1782529562019" [level=3] [ref=e210]
+          - heading "테스트 가게 1782530400867" [level=3] [ref=e210]
           - generic [ref=e211]: 한식 · 테스트 메뉴
           - generic [ref=e212]: 📍 서울 강서구 테스트동
           - generic [ref=e213]: ☎️ 02-1234-5678
@@ -251,7 +251,7 @@ Call log:
         - generic [ref=e221]: 🍽️
         - generic [ref=e222]:
           - generic [ref=e223]: 성도 추천
-          - heading "테스트 가게 1782529540612" [level=3] [ref=e224]
+          - heading "테스트 가게 1782529562019" [level=3] [ref=e224]
           - generic [ref=e225]: 한식 · 테스트 메뉴
           - generic [ref=e226]: 📍 서울 강서구 테스트동
           - generic [ref=e227]: ☎️ 02-1234-5678
@@ -264,78 +264,91 @@ Call log:
         - generic [ref=e235]: 🍽️
         - generic [ref=e236]:
           - generic [ref=e237]: 성도 추천
-          - heading "테스트 가게" [level=3] [ref=e238]
-          - generic [ref=e239]: 한식 · 바지락 칼국수
-          - generic [ref=e240]: 📍 서울 강서구 마곡동
-          - generic [ref=e241]: ☎️ 02-000-0000
+          - heading "테스트 가게 1782529540612" [level=3] [ref=e238]
+          - generic [ref=e239]: 한식 · 테스트 메뉴
+          - generic [ref=e240]: 📍 서울 강서구 테스트동
+          - generic [ref=e241]: ☎️ 02-1234-5678
           - generic [ref=e242]: 🕒 10:00-18:00
           - paragraph [ref=e243]: 테스트용 등록입니다
           - generic [ref=e244]:
             - generic [ref=e245]: 추천 · 테스터
             - button "지우기" [ref=e246] [cursor=pointer]
-  - contentinfo [ref=e247]:
-    - generic [ref=e248]: 동네 한 바퀴, 은혜 한 바구니
-    - generic [ref=e249]: 경청 프로젝트 2기 · 작은 실천 — 정보는 방문 시점에 따라 달라질 수 있으니, 표시된 안내를 참고해 주세요.
-  - link "📝 +" [ref=e250] [cursor=pointer]:
+      - article [ref=e247]:
+        - generic [ref=e249]: 🍽️
+        - generic [ref=e250]:
+          - generic [ref=e251]: 성도 추천
+          - heading "테스트 가게" [level=3] [ref=e252]
+          - generic [ref=e253]: 한식 · 바지락 칼국수
+          - generic [ref=e254]: 📍 서울 강서구 마곡동
+          - generic [ref=e255]: ☎️ 02-000-0000
+          - generic [ref=e256]: 🕒 10:00-18:00
+          - paragraph [ref=e257]: 테스트용 등록입니다
+          - generic [ref=e258]:
+            - generic [ref=e259]: 추천 · 테스터
+            - button "지우기" [ref=e260] [cursor=pointer]
+  - contentinfo [ref=e261]:
+    - generic [ref=e262]: 동네 한 바퀴, 은혜 한 바구니
+    - generic [ref=e263]: 경청 프로젝트 2기 · 작은 실천 — 정보는 방문 시점에 따라 달라질 수 있으니, 표시된 안내를 참고해 주세요.
+  - link "📝 +" [ref=e264] [cursor=pointer]:
     - /url: report.html
-    - generic [ref=e251]: 📝
-    - generic [ref=e252]: +
-  - button "💬" [ref=e253] [cursor=pointer]
-  - button "🍽️ ＋" [ref=e254] [cursor=pointer]:
-    - generic [ref=e255]: 🍽️
-    - generic [ref=e256]: ＋
-  - dialog "알리고 싶은 가게가 있나요?" [ref=e259]:
-    - button "닫기" [ref=e260] [cursor=pointer]: ✕
-    - generic [ref=e261]:
-      - generic [ref=e262]: 내가 아는 맛집 추가하기
-      - heading "알리고 싶은 가게가 있나요?" [level=2] [ref=e263]
-      - paragraph [ref=e264]: 아는 만큼만 적어 주셔도 괜찮아요. 빠진 정보는 관리자가 직접 채워 둘게요. 🌿
-    - generic [ref=e265]:
-      - generic [ref=e266]:
-        - text: 가게 이름 *
-        - textbox "가게 이름 *" [active] [ref=e267]:
-          - /placeholder: 예) 마곡 손칼국수
-      - generic [ref=e268]:
-        - generic [ref=e269]:
-          - text: 종류
-          - textbox "종류" [ref=e270]:
-            - /placeholder: 예) 한식 · 카페
-        - generic [ref=e271]:
-          - text: 대표 메뉴
-          - textbox "대표 메뉴" [ref=e272]:
-            - /placeholder: 예) 바지락 칼국수
-      - generic [ref=e273]:
-        - text: 주소
-        - textbox "주소" [ref=e274]:
-          - /placeholder: 예) 서울 강서구 …
-      - generic [ref=e275]:
-        - generic [ref=e276]:
-          - text: 전화
-          - textbox "전화" [ref=e277]:
-            - /placeholder: 예) 02-000-0000
-        - generic [ref=e278]:
-          - text: 영업시간
-          - textbox "영업시간" [ref=e279]:
-            - /placeholder: 예) 11:00–21:00, 일요일 휴무
+    - generic [ref=e265]: 📝
+    - generic [ref=e266]: +
+  - button "💬" [ref=e267] [cursor=pointer]
+  - button "🍽️ ＋" [ref=e268] [cursor=pointer]:
+    - generic [ref=e269]: 🍽️
+    - generic [ref=e270]: ＋
+  - dialog "알리고 싶은 가게가 있나요?" [ref=e273]:
+    - button "닫기" [ref=e274] [cursor=pointer]: ✕
+    - generic [ref=e275]:
+      - generic [ref=e276]: 내가 아는 맛집 추가하기
+      - heading "알리고 싶은 가게가 있나요?" [level=2] [ref=e277]
+      - paragraph [ref=e278]: 아는 만큼만 적어 주셔도 괜찮아요. 빠진 정보는 관리자가 직접 채워 둘게요. 🌿
+    - generic [ref=e279]:
       - generic [ref=e280]:
-        - text: 추천하는 이유 · 한마디
-        - textbox "추천하는 이유 · 한마디" [ref=e281]:
-          - /placeholder: 이 가게를 왜 소개하고 싶으신가요?
+        - text: 가게 이름 *
+        - textbox "가게 이름 *" [active] [ref=e281]:
+          - /placeholder: 예) 마곡 손칼국수
       - generic [ref=e282]:
+        - generic [ref=e283]:
+          - text: 종류
+          - textbox "종류" [ref=e284]:
+            - /placeholder: 예) 한식 · 카페
+        - generic [ref=e285]:
+          - text: 대표 메뉴
+          - textbox "대표 메뉴" [ref=e286]:
+            - /placeholder: 예) 바지락 칼국수
+      - generic [ref=e287]:
+        - text: 주소
+        - textbox "주소" [ref=e288]:
+          - /placeholder: 예) 서울 강서구 …
+      - generic [ref=e289]:
+        - generic [ref=e290]:
+          - text: 전화
+          - textbox "전화" [ref=e291]:
+            - /placeholder: 예) 02-000-0000
+        - generic [ref=e292]:
+          - text: 영업시간
+          - textbox "영업시간" [ref=e293]:
+            - /placeholder: 예) 11:00–21:00, 일요일 휴무
+      - generic [ref=e294]:
+        - text: 추천하는 이유 · 한마디
+        - textbox "추천하는 이유 · 한마디" [ref=e295]:
+          - /placeholder: 이 가게를 왜 소개하고 싶으신가요?
+      - generic [ref=e296]:
         - text: 사진 (선택, 최대 6장)
-        - button "사진 (선택, 최대 6장)" [ref=e283]
-      - generic [ref=e284]:
+        - button "사진 (선택, 최대 6장)" [ref=e297]
+      - generic [ref=e298]:
         - text: 알려주신 분(선택)
-        - textbox "알려주신 분(선택)" [ref=e285]:
+        - textbox "알려주신 분(선택)" [ref=e299]:
           - /placeholder: 이름 또는 별명
-      - generic [ref=e286]:
+      - generic [ref=e300]:
         - text: 비밀번호 *
-        - textbox "비밀번호 *" [ref=e287]:
+        - textbox "비밀번호 *" [ref=e301]:
           - /placeholder: 나중에 직접 지울 때 쓸 비밀번호(4자 이상)
           - text: test1234
-      - generic [ref=e288]:
-        - button "취소" [ref=e289]
-        - button "등록 제안하기" [ref=e290]
+      - generic [ref=e302]:
+        - button "취소" [ref=e303]
+        - button "등록 제안하기" [ref=e304]
 ```
 
 # Test source

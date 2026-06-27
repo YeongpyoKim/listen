@@ -191,11 +191,15 @@ module.exports = {
     },
 
     async delete(cid) {
-      const issue = await findIssueByLabelAndTitle('comment', `comment:`);
-      if (issue && issue.title.endsWith(`:${cid}`)) {
-        // Close instead of hard delete to maintain history and avoid orphaned data
+      // Find the specific issue by cid (same logic as getByCid but with state=all to include closed ones)
+      const issues = await githubRequest(`/repos/${GITHUB_REPO}/issues?labels=comment&state=all&per_page=100`);
+      const issue = issues.find(i => i.title.startsWith('comment:') && i.title.endsWith(`:${cid}`));
+      
+      if (issue) {
+        // Close instead of hard delete to maintain history
         return await closeIssue(issue.number);
       }
+      console.log(`Comment with cid ${cid} not found or already closed`);
       return null;
     },
 

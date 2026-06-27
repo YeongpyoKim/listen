@@ -133,7 +133,6 @@
             <div class="cf-actions">
               <button class="btn primary" id="c_post">남기기</button>
               <button class="btn" id="c_clear">지우기</button>
-              <button class="btn" id="c_delAll">전체삭제</button>
             </div>
           </div>
         </div>
@@ -381,55 +380,6 @@
           .finally(() => (postBtn.disabled = false));
       }
 
-      function delAll() {
-        const countInput = prompt("전체 댓글을 지우려면 삭제하려는 개수를 입력해 주세요.\n현재 표시된 댓글 수: " + listEl.querySelectorAll('.c-item').length);
-        if (!countInput) return;
-        const count = parseInt(countInput, 10);
-        if (isNaN(count) || count <= 0) return alert("유효한 숫자를 입력해 주세요.");
-
-        const pw = prompt("전체 삭제를 확인하려면 등록 시 사용한 비밀번호 중 하나를 입력해 주세요.");
-        if (!pw || pw.length < 4) return alert("비밀번호는 4 자 이상이어야 합니다.");
-
-        // 현재 표시된 댓글 목록을 가져와서 순차 삭제
-        const items = Array.from(listEl.querySelectorAll('.c-item'));
-        if (items.length === 0) return alert("삭제할 댓글이 없습니다.");
-
-        // 최대 10 개까지만 한 번에 삭제
-        const toDelete = Math.min(count, 10);
-        if (toDelete > items.length) {
-          return alert(`현재 표시된 댓글은 ${items.length}개입니다. 더 많은 삭제가 필요하면 페이지를 새로고침 후 다시 시도해 주세요.`);
-        }
-
-        // 병렬로 삭제 요청 (최대 5 개 동시)
-        let deletedCount = 0;
-        let failedCount = 0;
-        const promises = [];
-
-        for (let i = 0; i < toDelete && i < items.length; i++) {
-          const cid = items[i].getAttribute('data-cid');
-          if (!cid) continue;
-
-          const p = fetch(API, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action: "delete", id: s.id, cid, password: pw.trim() }),
-          })
-            .then((r) => r.json())
-            .then((d) => {
-              if (d.ok) deletedCount++;
-              else failedCount++;
-            })
-            .catch(() => failedCount++);
-
-          promises.push(p);
-        }
-
-        Promise.all(promises).then(() => {
-          load(); // 목록 새로고침
-          alert(`삭제 완료: ${deletedCount}개 성공, ${failedCount}개 실패\n실패한 댓글은 비밀번호가 일치하지 않거나 이미 삭제되었을 수 있습니다.`);
-        });
-      }
-
       // Image upload handlers
       function readFile(file) {
         return new Promise((resolve, reject) => {
@@ -481,7 +431,6 @@
         photoData = [];
         renderPreview();
       });
-      if (delAllBtn) delAllBtn.addEventListener("click", delAll);
       load();
     })();
   }
