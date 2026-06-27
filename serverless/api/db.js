@@ -155,18 +155,20 @@ module.exports = {
             password: body.password || '', // Store for auth (in production, hash this!)
             ts: issue.created_at,
             edited_ts: issue.updated_at,
+            photos: body.photos || [],
           };
         })
         .sort((a, b) => new Date(b.ts) - new Date(a.ts));
     },
 
-    async add(storeId, cid, name, text, password, ts) {
+    async add(storeId, cid, name, text, password, ts, photos = []) {
       const title = `comment:${storeId}:${cid}`;
       const body = JSON.stringify({
         name: name || '익명',
         text,
         password,
         ts,
+        photos,
         _internal: true // Flag to identify internal data structure
       });
       return await createIssue('comment', title, body);

@@ -274,6 +274,14 @@ a { color: inherit; text-decoration: none; }
 .comment-form .cf-row { display:flex; gap:8px; }
 .comment-form .cf-row input { flex:1; }
 .comment-form .cf-actions { display:flex; gap:8px; margin-top:2px; }
+.comment-form .cf-upload { display:block; margin-top:10px; font-size:13px; color:var(--ink-soft); }
+.comment-form .cf-upload input[type="file"] { display:block; margin-top:6px; font-size:13px; }
+.comment-form .cf-preview { display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
+.comment-form .cf-thumb { position:relative; width:70px; height:70px; border-radius:8px; overflow:hidden; border:1px solid var(--line); }
+.comment-form .cf-thumb img { width:100%; height:100%; object-fit:cover; }
+.comment-form .cf-thumb .cf-x { position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; border:none; background:rgba(0,0,0,.6); color:#fff; font-size:12px; cursor:pointer; display:grid; place-items:center; }
+.c-item .c-photos { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+.c-item .c-photos img { width:80px; height:80px; object-fit:cover; border-radius:6px; cursor:pointer; border:1px solid var(--line); }
 @media (max-width: 520px) { .comment-form .cf-row { flex-direction:column; } }
 
 /* ===== 변경된 정보 제보하기 FAB ===== */

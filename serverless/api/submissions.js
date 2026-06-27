@@ -49,6 +49,7 @@ module.exports = async function (req, res) {
 
     const body = req.body || (await new Promise((resolve, reject) => {
       let buf = '';
+      req.setEncoding('utf8');
       req.on('data', c => (buf += c));
       req.on('end', () => resolve(JSON.parse(buf || '{}')));
       req.on('error', reject);

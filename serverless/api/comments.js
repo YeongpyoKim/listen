@@ -5,9 +5,30 @@
 
 const db = require('./db');
 const crypto = require('crypto');
+const { Buffer } = require('buffer');
 
 function jsonResponse(res, status, obj) {
   return res.status(status).json(obj);
+}
+
+// Image upload helper
+async function uploadPhotos(commentId, photos) {
+  const urls = [];
+  for (const p of photos) {
+    if (!p) continue;
+    if (/^https?:\/\//.test(p)) {
+      urls.push(p);
+      continue;
+    }
+    const match = String(p).match(/^data:image\/(\w+);base64,(.+)$/);
+    if (!match) continue;
+    const ext = match[1] === 'jpeg' ? '.jpg' : `.${match[1]}`;
+    const buffer = Buffer.from(match[2], 'base64');
+    if (buffer.length > 2 * 1024 * 1024) continue; // 2MB limit
+    const url = await db.images.upload(`comments/${commentId}`, buffer, ext);
+    urls.push(url);
+  }
+  return urls;
 }
 
 module.exports = async function (req, res) {
@@ -30,11 +51,12 @@ module.exports = async function (req, res) {
     if (req.method === 'POST') {
       const body = req.body || (await new Promise((resolve) => {
         let d = '';
+        req.setEncoding('utf8');
         req.on('data', c => d += c);
         req.on('end', () => resolve(JSON.parse(d || '{}')));
       }));
 
-      const { action, id: storeId, cid, name, text, password } = body;
+      const { action, id: storeId, cid, name, text, password, photos } = body;
 
       if (action === 'add') {
         if (!storeId || !text || !password) {
@@ -47,7 +69,10 @@ module.exports = async function (req, res) {
         const newCid = crypto.randomUUID();
         const ts = new Date().toISOString();
 
-        await db.comments.add(storeId, newCid, name || '익명', text, password, ts);
+        // Upload photos first
+        const photoUrls = await uploadPhotos(newCid, Array.isArray(photos) ? photos : []);
+
+        await db.comments.add(storeId, newCid, name || '익명', text, password, ts, photoUrls);
 
         // Return updated list
         const comments = await db.comments.list(storeId);

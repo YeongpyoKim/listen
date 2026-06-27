@@ -125,6 +125,11 @@
               <input id="c_pw" type="password" maxlength="40" placeholder="비밀번호(수정·삭제용, 4자 이상)" />
             </div>
             <textarea id="c_text" maxlength="1000" placeholder="따뜻한 한마디를 남겨 보세요"></textarea>
+            <label class="cf-upload">
+              첨부 사진 (선택, 최대 3 장, 각 2MB 까지)
+              <input type="file" id="c_photos" accept="image/*" multiple />
+              <div class="cf-preview" id="cPreview"></div>
+            </label>
             <div class="cf-actions"><button class="btn primary" id="c_post">남기기</button><button class="btn" id="c_clear">지우기</button></div>
           </div>
         </div>
@@ -225,6 +230,13 @@
       const textEl = document.getElementById("c_text");
       const postBtn = document.getElementById("c_post");
       const clearBtn = document.getElementById("c_clear");
+      const photosEl = document.getElementById("c_photos");
+      const previewEl = document.getElementById("cPreview");
+
+      // Image upload constants
+      const MAX_PHOTOS = 3;
+      const MAX_BYTES = 2 * 1024 * 1024; // 2MB
+      let photoData = []; // base64 data URLs
 
       function fmt(ts) {
         try { return new Date(ts).toLocaleString("ko-KR"); } catch (e) { return ""; }
@@ -237,14 +249,21 @@
         }
         listEl.innerHTML = arr
           .map(
-            (c) => `<div class='c-item' data-cid='${c.cid}'>
-              <div class='c-h'><b>${esc(c.name || "익명")}</b><span class='c-t'>${fmt(c.ts)}${c.edited_ts ? " · 수정됨" : ""}</span></div>
-              <div class='c-b'>${esc(c.text)}</div>
-              <div class='c-actions'>
-                <button class='c-edit' data-cid='${c.cid}'>수정</button>
-                <button class='c-del' data-cid='${c.cid}'>삭제</button>
-              </div>
-            </div>`
+            (c) => {
+              const photos = (c.photos || []).filter(Boolean);
+              const photosHTML = photos.length
+                ? `<div class='c-photos'>${photos.map(p => `<img src="${p}" alt="" data-zoom />`).join("")}</div>`
+                : "";
+              return `<div class='c-item' data-cid='${c.cid}'>
+                <div class='c-h'><b>${esc(c.name || "익명")}</b><span class='c-t'>${fmt(c.ts)}${c.edited_ts ? " · 수정됨" : ""}</span></div>
+                <div class='c-b'>${esc(c.text)}</div>
+                ${photosHTML}
+                <div class='c-actions'>
+                  <button class='c-edit' data-cid='${c.cid}'>수정</button>
+                  <button class='c-del' data-cid='${c.cid}'>삭제</button>
+                </div>
+              </div>`;
+            }
           )
           .join("");
         bindItemActions();
@@ -270,7 +289,7 @@
         fetch(API, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "add", id: s.id, name: (nameEl.value || "").trim(), text: txt, password: pw }),
+          body: JSON.stringify({ action: "add", id: s.id, name: (nameEl.value || "").trim(), text: txt, password: pw, photos: photoData }),
         })
           .then((r) => r.json().then((d) => ({ ok: r.ok, d })))
           .then(({ ok, d }) => {
@@ -330,11 +349,54 @@
         );
       }
 
+      // Image upload handlers
+      function readFile(file) {
+        return new Promise((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onload = () => resolve(fr.result);
+          fr.onerror = reject;
+          fr.readAsDataURL(file);
+        });
+      }
+
+      function renderPreview() {
+        previewEl.innerHTML = photoData
+          .map((src, i) => `<div class="cf-thumb"><img src="${src}" alt="" /><button type="button" class="cf-x" data-i="${i}">✕</button></div>`)
+          .join("");
+        previewEl.querySelectorAll(".cf-x").forEach((b) =>
+          b.addEventListener("click", () => {
+            photoData.splice(Number(b.getAttribute("data-i")), 1);
+            renderPreview();
+          })
+        );
+      }
+
+      photosEl.addEventListener("change", async () => {
+        const files = Array.from(photosEl.files || []);
+        for (const f of files) {
+          if (photoData.length >= MAX_PHOTOS) break;
+          if (!/^image\//.test(f.type)) continue;
+          if (f.size > MAX_BYTES) {
+            alert(`"${f.name}" 사진이 너무 큽니다 (최대 2MB).`);
+            continue;
+          }
+          try {
+            photoData.push(await readFile(f));
+          } catch (e) {
+            /* skip */
+          }
+        }
+        photosEl.value = "";
+        renderPreview();
+      });
+
       postBtn.addEventListener("click", post);
       clearBtn.addEventListener("click", () => {
         nameEl.value = "";
         pwEl.value = "";
         textEl.value = "";
+        photoData = [];
+        renderPreview();
       });
       load();
     })();

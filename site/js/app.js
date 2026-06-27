@@ -105,7 +105,9 @@
                  <div class="ph-tag">${s.tagline || s.type}</div>
                </div>`;
     } else {
-      media = `<img loading="lazy" src="${s.main_image}" alt="${s.name}" />`;
+      // gallery 의 첫 번째 이미지를 "우리 가게 한 장면" 으로 사용
+      const firstGalleryImg = (s.gallery && s.gallery.length > 0) ? s.gallery[0] : s.main_image;
+      media = `<img loading="lazy" src="${firstGalleryImg}" alt="${s.name}" />`;
     }
     const ccount = commentCounts[s.id] || 0;
     const fcount = favoriteCounts[s.id] || 0;
