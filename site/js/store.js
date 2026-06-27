@@ -262,20 +262,94 @@
                 <div class='c-h'><b>${esc(c.name || "익명")}</b><span class='c-t'>${fmt(c.ts)}${c.edited_ts ? " · 수정됨" : ""}</span></div>
                 <div class='c-b'>${esc(c.text)}</div>
                 ${photosHTML}
+                <div class='c-actions' data-cid='${c.cid}'>
+                  <button class='c-edit-btn' data-cid='${c.cid}'>수정</button>
+                  <button class='c-del-btn' data-cid='${c.cid}'>삭제</button>
+                </div>
               </div>`;
             }
           )
           .join("");
       }
 
+      function attachCommentActions() {
+        listEl.querySelectorAll('.c-del-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const cid = btn.getAttribute('data-cid');
+            if (!cid) return;
+            
+            const pw = prompt("삭제하려면 비밀번호를 입력해 주세요:");
+            if (!pw || pw.length < 4) return alert("비밀번호는 4 자 이상이어야 합니다.");
+            
+            try {
+              const res = await fetch(API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "delete", id: s.id, cid, password: pw.trim() }),
+              });
+              const d = await res.json();
+              
+              if (d.ok) {
+                alert("댓글이 삭제되었습니다.");
+                load();
+              } else {
+                alert("삭제 실패: " + (d.error || "비밀번호가 일치하지 않거나 이미 삭제된 댓글입니다."));
+              }
+            } catch (err) {
+              console.error("댓글 삭제 오류:", err);
+              alert("삭제 중 문제가 발생했습니다.");
+            }
+          });
+        });
+        
+        listEl.querySelectorAll('.c-edit-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const cid = btn.getAttribute('data-cid');
+            if (!cid) return;
+            
+            const pw = prompt("수정하려면 비밀번호를 입력해 주세요:");
+            if (!pw || pw.length < 4) return alert("비밀번호는 4 자 이상이어야 합니다.");
+            
+            // 현재 댓글 텍스트 찾기
+            const item = btn.closest('.c-item');
+            const currentText = item.querySelector('.c-b')?.textContent;
+            
+            const newText = prompt("댓글을 수정하세요:", currentText);
+            if (!newText || !newText.trim()) return alert("댓글 내용을 입력해 주세요.");
+            
+            try {
+              const res = await fetch(API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: "edit", id: s.id, cid, text: newText.trim(), password: pw.trim() }),
+              });
+              const d = await res.json();
+              
+              if (d.ok) {
+                alert("댓글이 수정되었습니다.");
+                load();
+              } else {
+                alert("수정 실패: " + (d.error || "비밀번호가 일치하지 않습니다."));
+              }
+            } catch (err) {
+              console.error("댓글 수정 오류:", err);
+              alert("수정 중 문제가 발생했습니다.");
+            }
+          });
+        });
+      }
+
       function load() {
         listEl.innerHTML = "불러오는 중…";
         fetch(`${API}?id=${encodeURIComponent(s.id)}`)
           .then((r) => r.json())
-          .then((d) => renderList(d.comments || []))
+          .then((d) => {
+            renderList(d.comments || []);
+            attachCommentActions(); // 개별 댓글 수정/삭제 바인딩
+          })
           .catch(() => {
             listEl.innerHTML =
-              "<div class='empty'>댓글을 불러오지 못했어요. 로컬 서버(python serve.py)로 열어 주세요.</div>";
+              "<div class='empty'>댓글을 불러오지 못했어요. 로컬 서버 (python serve.py) 로 열어 주세요.</div>";
           });
       }
 
