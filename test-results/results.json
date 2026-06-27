@@ -116,12 +116,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3388,
+                      "duration": 3480,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.939Z",
+                      "startTime": "2026-06-27T03:19:57.421Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -150,12 +150,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3091,
+                      "duration": 3252,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.934Z",
+                      "startTime": "2026-06-27T03:19:57.434Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -184,7 +184,7 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "failed",
-                      "duration": 8789,
+                      "duration": 8978,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('.cf-upload')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('.cf-upload')\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('.cf-upload')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('.cf-upload')\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/comments.spec.js:46:31",
@@ -208,7 +208,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.898Z",
+                      "startTime": "2026-06-27T03:19:57.380Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -258,12 +258,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 4916,
+                      "duration": 5859,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.900Z",
+                      "startTime": "2026-06-27T03:19:57.443Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -273,7 +273,7 @@
               ],
               "id": "8c8f12aa76baf09d2629-e056905084cb42b78f85",
               "file": "comments.spec.js",
-              "line": 54,
+              "line": 58,
               "column": 3
             },
             {
@@ -292,7 +292,7 @@
                       "workerIndex": 4,
                       "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 5171,
+                      "duration": 5076,
                       "errors": [],
                       "stdout": [
                         {
@@ -301,7 +301,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.918Z",
+                      "startTime": "2026-06-27T03:19:57.362Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -311,7 +311,7 @@
               ],
               "id": "8c8f12aa76baf09d2629-79082b81fbef7e402282",
               "file": "comments.spec.js",
-              "line": 68,
+              "line": 72,
               "column": 3
             }
           ]
@@ -319,7 +319,7 @@
         {
           "title": "댓글 등록 및 삭제",
           "file": "comments.spec.js",
-          "line": 82,
+          "line": 86,
           "column": 6,
           "specs": [
             {
@@ -338,31 +338,31 @@
                       "workerIndex": 5,
                       "parallelIndex": 5,
                       "status": "failed",
-                      "duration": 8810,
+                      "duration": 8837,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('#c_photos')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('#c_photos')\u001b[22m\n",
-                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('#c_photos')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('#c_photos')\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/comments.spec.js:96:45",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('#c_photos')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('#c_photos')\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/comments.spec.js:100:45",
                         "location": {
                           "file": "/home/yp/project/listen/listen-main/tests/e2e/comments.spec.js",
                           "column": 45,
-                          "line": 96
+                          "line": 100
                         },
-                        "snippet": "  94 |     await expect(form.locator('#c_pw')).toBeVisible();\n  95 |     await expect(form.locator('#c_text')).toBeVisible();\n> 96 |     await expect(form.locator('#c_photos')).toBeVisible();\n     |                                             ^\n  97 |     await expect(form.locator('#c_post')).toBeVisible();\n  98 |     await expect(form.locator('#c_clear')).toBeVisible();\n  99 |   });"
+                        "snippet": "   98 |     await expect(form.locator('#c_pw')).toBeVisible();\n   99 |     await expect(form.locator('#c_text')).toBeVisible();\n> 100 |     await expect(form.locator('#c_photos')).toBeVisible();\n      |                                             ^\n  101 |     await expect(form.locator('#c_post')).toBeVisible();\n  102 |     await expect(form.locator('#c_clear')).toBeVisible();\n  103 |   });"
                       },
                       "errors": [
                         {
                           "location": {
                             "file": "/home/yp/project/listen/listen-main/tests/e2e/comments.spec.js",
                             "column": 45,
-                            "line": 96
+                            "line": 100
                           },
-                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('#c_photos')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('#c_photos')\u001b[22m\n\n\n  94 |     await expect(form.locator('#c_pw')).toBeVisible();\n  95 |     await expect(form.locator('#c_text')).toBeVisible();\n> 96 |     await expect(form.locator('#c_photos')).toBeVisible();\n     |                                             ^\n  97 |     await expect(form.locator('#c_post')).toBeVisible();\n  98 |     await expect(form.locator('#c_clear')).toBeVisible();\n  99 |   });\n    at /home/yp/project/listen/listen-main/tests/e2e/comments.spec.js:96:45"
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('.comment-form').locator('#c_photos')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.comment-form').locator('#c_photos')\u001b[22m\n\n\n   98 |     await expect(form.locator('#c_pw')).toBeVisible();\n   99 |     await expect(form.locator('#c_text')).toBeVisible();\n> 100 |     await expect(form.locator('#c_photos')).toBeVisible();\n      |                                             ^\n  101 |     await expect(form.locator('#c_post')).toBeVisible();\n  102 |     await expect(form.locator('#c_clear')).toBeVisible();\n  103 |   });\n    at /home/yp/project/listen/listen-main/tests/e2e/comments.spec.js:100:45"
                         }
                       ],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.952Z",
+                      "startTime": "2026-06-27T03:19:57.421Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -384,7 +384,7 @@
                       "errorLocation": {
                         "file": "/home/yp/project/listen/listen-main/tests/e2e/comments.spec.js",
                         "column": 45,
-                        "line": 96
+                        "line": 100
                       }
                     }
                   ],
@@ -393,7 +393,7 @@
               ],
               "id": "8c8f12aa76baf09d2629-18bed274a4bb3cbcb11a",
               "file": "comments.spec.js",
-              "line": 90,
+              "line": 94,
               "column": 3
             }
           ]
@@ -429,7 +429,7 @@
                       "workerIndex": 6,
                       "parallelIndex": 6,
                       "status": "failed",
-                      "duration": 6990,
+                      "duration": 6798,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#submitFab')\nExpected: \u001b[32m\"내가 아는\u001b[7m 교회 동네\u001b[27m 맛집 추가하기\"\u001b[39m\nReceived: \u001b[31m\"내가 아는 맛집 추가하기\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#submitFab')\u001b[22m\n\u001b[2m    14 × locator resolved to <button id=\"submitFab\" class=\"submit-fab\" title=\"내가 아는 맛집 추가하기\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"내가 아는 맛집 추가하기\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#submitFab')\nExpected: \u001b[32m\"내가 아는\u001b[7m 교회 동네\u001b[27m 맛집 추가하기\"\u001b[39m\nReceived: \u001b[31m\"내가 아는 맛집 추가하기\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#submitFab')\u001b[22m\n\u001b[2m    14 × locator resolved to <button id=\"submitFab\" class=\"submit-fab\" title=\"내가 아는 맛집 추가하기\">…</button>\u001b[22m\n\u001b[2m       - unexpected value \"내가 아는 맛집 추가하기\"\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/submission.spec.js:27:23",
@@ -453,7 +453,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.900Z",
+                      "startTime": "2026-06-27T03:19:57.380Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -503,7 +503,7 @@
                       "workerIndex": 7,
                       "parallelIndex": 7,
                       "status": "failed",
-                      "duration": 6546,
+                      "duration": 7111,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#submitModal').locator('.sm-eyebrow')\nExpected substring: \u001b[32m\"내가 아는\u001b[7m 교회 동네\u001b[27m 맛집 추가하기\"\u001b[39m\nReceived string:    \u001b[31m\"내가 아는 맛집 추가하기\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#submitModal').locator('.sm-eyebrow')\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"sm-eyebrow\">내가 아는 맛집 추가하기</div>\u001b[22m\n\u001b[2m       - unexpected value \"내가 아는 맛집 추가하기\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#submitModal').locator('.sm-eyebrow')\nExpected substring: \u001b[32m\"내가 아는\u001b[7m 교회 동네\u001b[27m 맛집 추가하기\"\u001b[39m\nReceived string:    \u001b[31m\"내가 아는 맛집 추가하기\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#submitModal').locator('.sm-eyebrow')\u001b[22m\n\u001b[2m    14 × locator resolved to <div class=\"sm-eyebrow\">내가 아는 맛집 추가하기</div>\u001b[22m\n\u001b[2m       - unexpected value \"내가 아는 맛집 추가하기\"\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/submission.spec.js:38:27",
@@ -527,7 +527,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.942Z",
+                      "startTime": "2026-06-27T03:19:57.381Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -577,7 +577,7 @@
                       "workerIndex": 8,
                       "parallelIndex": 8,
                       "status": "failed",
-                      "duration": 7536,
+                      "duration": 7469,
                       "error": {
                         "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#smMsg')\nExpected substring: \u001b[32m\"가게 이름을 입력해 주세요\"\u001b[39m\nReceived string:    \u001b[31m\"\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#smMsg')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"smMsg\" class=\"sm-msg\"></div>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n",
                         "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#smMsg')\nExpected substring: \u001b[32m\"가게 이름을 입력해 주세요\"\u001b[39m\nReceived string:    \u001b[31m\"\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#smMsg')\u001b[22m\n\u001b[2m    14 × locator resolved to <div id=\"smMsg\" class=\"sm-msg\"></div>\u001b[22m\n\u001b[2m       - unexpected value \"\"\u001b[22m\n\n    at /home/yp/project/listen/listen-main/tests/e2e/submission.spec.js:56:25",
@@ -601,7 +601,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.922Z",
+                      "startTime": "2026-06-27T03:19:57.403Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -651,12 +651,12 @@
                       "workerIndex": 9,
                       "parallelIndex": 9,
                       "status": "passed",
-                      "duration": 1903,
+                      "duration": 2252,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:05:58.924Z",
+                      "startTime": "2026-06-27T03:19:57.376Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -685,7 +685,7 @@
                       "workerIndex": 9,
                       "parallelIndex": 9,
                       "status": "passed",
-                      "duration": 1662,
+                      "duration": 1707,
                       "errors": [],
                       "stdout": [
                         {
@@ -694,7 +694,7 @@
                       ],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:06:00.922Z",
+                      "startTime": "2026-06-27T03:19:59.710Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -723,12 +723,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1923,
+                      "duration": 2083,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-27T03:06:02.118Z",
+                      "startTime": "2026-06-27T03:20:00.768Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -748,8 +748,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-06-27T03:05:58.657Z",
-    "duration": 9235.879,
+    "startTime": "2026-06-27T03:19:57.113Z",
+    "duration": 9379.503,
     "expected": 7,
     "skipped": 0,
     "unexpected": 5,
