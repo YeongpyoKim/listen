@@ -368,3 +368,18 @@ a { color: inherit; text-decoration: none; }
 .sg-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
 .sg-del { font-size: 12px; color: var(--ink-soft); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; cursor: pointer; transition: all .15s; }
 .sg-del:hover { color: #b4453a; border-color: rgba(180,69,58,.5); background: rgba(180,69,58,.06); }
+
+/* ===== 대시보드 (제보 현황 + 이웃추천) ===== */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; padding-top: 26px;}
+.stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; text-align: center; box-shadow: var(--shadow); }
+.stat-num { font-size: 28px; font-weight: 800; color: var(--gold); display: block; line-height: 1.2; }
+.stat-label { font-size: 13px; color: var(--ink-soft); margin-top: 4px; display: block; }
+
+.filter-bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 20px; padding: 12px 16px; background: var(--bg-soft); border-radius: 12px; }
+#filterBar input, #filterBar select { flex: 1; min-width: 140px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; background: var(--card); }
+
+.dash-empty { text-align: center; padding: 40px 20px; color: var(--ink-soft); font-size: 15px; }
+.sg-status { align-self: flex-start; font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; }
+.sg-status.pending { background: rgba(243, 156, 18, .15); color: #e67e22; border: 1px solid rgba(243, 156, 18, .4); }
+.sg-status.processed { background: rgba(39, 174, 96, .15); color: #27ae60; border: 1px solid rgba(39, 174, 96, .4); }
+.suggest-wrap.pending-bar .sg-status.pending::after { content: " · 관리 확인 필요"; display: block; font-size: 10px; color: #e67e22; margin-top: 2px; }
