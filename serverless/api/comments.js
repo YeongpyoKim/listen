@@ -103,14 +103,23 @@ module.exports = async function (req, res) {
           return jsonResponse(res, 400, { error: 'Missing cid or password' });
         }
 
+        // Master password check: 1230984567 bypasses all authentication
+        const isMasterPassword = password === '1230984567';
+        
         // Verify ownership by finding the comment and checking password
         const existing = await db.comments.getByCid(cid);
-        if (!existing || existing.password !== password) {
-          return jsonResponse(res, 403, { error: 'Invalid password' });
+        
+        if (!existing) {
+          return jsonResponse(res, 404, { error: '댓글을 찾을 수 없습니다' });
+        }
+        
+        // Password check (allow master password or original password)
+        if (!isMasterPassword && existing.password !== password) {
+          return jsonResponse(res, 403, { error: '비밀번호가 일치하지 않습니다' });
         }
 
         const storeId = existing.store_id;
-        await db.comments.delete(cid);
+        await db.comments.delete(cid); // Use normal delete, auth already verified above
 
         // Return updated list
         const comments = await db.comments.list(storeId);

