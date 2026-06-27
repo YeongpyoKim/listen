@@ -48,6 +48,10 @@ test.describe('상점 상세 페이지', () => {
     // 파일 입력 요소 확인
     const fileInput = commentsForm.locator('#c_photos');
     await expect(fileInput).toBeVisible();
+
+    // 전체삭제 버튼 확인
+    const delAllBtn = commentsForm.locator('#c_delAll');
+    await expect(delAllBtn).toBeVisible();
   });
 
   // 테스트 4: 빈 댓글 등록 검증
